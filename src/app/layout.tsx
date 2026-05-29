@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Flashframe | Spinnerbooth Verhuur",
+  title: "Flashframe — Photobooth & 360° Spinnerbooth Verhuur",
   description:
-    "Maak jouw feest onvergetelijk met de Flashframe spinnerbooth. Boek nu de coolste photobooth voor jouw evenement.",
+    "Flashframe verhuurt premium photobooths en 360° spinnerbooths voor onvergetelijke evenementen. Check beschikbaarheid en boek vandaag.",
 };
 
 export default function RootLayout({
@@ -19,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nl" className={`${geistSans.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-[#0a0a0a] text-[#f5f5f5]">
+    <html lang="nl" className={`${inter.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-black text-white">
         {children}
       </body>
     </html>
