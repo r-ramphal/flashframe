@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import WhatsAppButton from "./WhatsAppButton";
 
 const links = [
   { label: "Producten", href: "#products" },
@@ -47,7 +48,8 @@ export default function Navbar() {
           ))}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          <WhatsAppButton variant="icon" />
           <a
             href="#booking"
             className="btn-primary px-6 py-2 rounded-full text-xs font-semibold tracking-wider uppercase active:scale-90 transition-transform"

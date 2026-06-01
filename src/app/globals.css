@@ -15,6 +15,13 @@
   --color-secondary: #712edd;
   --color-border-subtle: #e5e7eb;
   --color-text-muted: #6b7280;
+  --color-error: #ba1a1a;
+}
+
+/* Voorkomt dat ankerdoelen onder de vaste navbar verdwijnen */
+section[id],
+footer[id] {
+  scroll-margin-top: 88px;
 }
 
 html {

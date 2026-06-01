@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { whatsappUrl } from "../site";
 
 const fieldClass =
   "input-field w-full px-0 py-3 text-base text-primary bg-transparent focus:ring-0";
@@ -9,26 +10,45 @@ const labelClass = "block text-xs font-semibold tracking-wider uppercase text-pr
 export default function BookingForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Datum van vandaag (YYYY-MM-DD) om data in het verleden te blokkeren.
+  const today = new Date().toISOString().split("T")[0];
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
+    setError(null);
 
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
 
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
-        subject: "Nieuwe boekingsaanvraag via Flashframe",
-        ...data,
-      }),
-    });
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
+          subject: "Nieuwe boekingsaanvraag via Flashframe",
+          from_name: "Flashframe website",
+          replyto: data.email,
+          ...data,
+        }),
+      });
 
-    if (response.ok) {
-      setSubmitted(true);
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitted(true);
+      } else {
+        setError(
+          "Er ging iets mis bij het versturen. Probeer het opnieuw of mail ons direct."
+        );
+      }
+    } catch {
+      setError(
+        "Geen verbinding. Controleer je internet en probeer het opnieuw."
+      );
     }
 
     setLoading(false);
@@ -55,6 +75,15 @@ export default function BookingForm() {
       onSubmit={handleSubmit}
       className="space-y-8 bg-surface-bright p-8 md:p-12 rounded-2xl border border-border-subtle shadow-sm"
     >
+      {/* Honeypot tegen spam: door bots ingevuld, voor mensen verborgen */}
+      <input
+        type="checkbox"
+        name="botcheck"
+        className="hidden"
+        style={{ display: "none" }}
+        tabIndex={-1}
+        autoComplete="off"
+      />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <label className={labelClass} htmlFor="name">
@@ -104,6 +133,7 @@ export default function BookingForm() {
             name="datum"
             type="date"
             required
+            min={today}
             className={fieldClass}
           />
         </div>
@@ -167,14 +197,44 @@ export default function BookingForm() {
         />
       </div>
 
-      <div className="pt-4 flex justify-end">
+      <label className="flex items-start gap-3 text-sm text-on-surface-variant">
+        <input
+          type="checkbox"
+          name="privacy_akkoord"
+          required
+          className="mt-1 h-4 w-4 accent-secondary flex-shrink-0"
+        />
+        <span>
+          Ik ga ermee akkoord dat mijn gegevens worden gebruikt om mijn aanvraag
+          te behandelen.
+        </span>
+      </label>
+
+      {error && (
+        <p className="text-sm text-error font-medium" role="alert">
+          {error}
+        </p>
+      )}
+
+      <div className="pt-2 flex flex-col sm:flex-row-reverse sm:items-center gap-4 sm:justify-between">
         <button
           type="submit"
           disabled={loading}
-          className="btn-primary w-full md:w-auto px-12 py-4 rounded-full text-xs font-semibold tracking-wider uppercase disabled:opacity-50"
+          className="btn-primary w-full sm:w-auto px-12 py-4 rounded-full text-xs font-semibold tracking-wider uppercase disabled:opacity-50"
         >
           {loading ? "Versturen..." : "Aanvraag versturen"}
         </button>
+        <span className="text-sm text-text-muted text-center sm:text-left">
+          Liever direct contact?{" "}
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-secondary font-medium hover:underline"
+          >
+            WhatsApp ons
+          </a>
+        </span>
       </div>
     </form>
   );
