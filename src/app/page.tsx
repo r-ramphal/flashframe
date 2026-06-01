@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar";
 import BookingForm from "./components/BookingForm";
 import Photo from "./components/Photo";
+import Pricing from "./components/Pricing";
 
 const booths = [
   {
@@ -260,6 +261,9 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        {/* PAKKETTEN & PRIJZEN */}
+        <Pricing />
 
         {/* BOEKEN */}
         <section
