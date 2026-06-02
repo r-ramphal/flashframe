@@ -27,6 +27,7 @@ const booths = [
     description:
       "Hoogwaardige kwaliteit in seconden. Creëer tastbare herinneringen met professionele belichting en directe fysieke prints voor je gasten.",
     image: "/images/fotobooth.jpg",
+    video: "/videos/booth-showcase.mp4",
     alt: "Fotobooth met directe print",
     features: [
       { icon: "print", label: "Directe premium prints" },
@@ -40,6 +41,7 @@ const booths = [
     description:
       "Deze booth beschikt over een roterende arm waaraan je je eigen mobiele telefoon kunt bevestigen om cinematografische 360° video's te maken. Direct klaar om te delen en perfect voor social media.",
     image: "/images/spinnerbooth.jpg",
+    video: "",
     alt: "360° Spinnerbooth",
     features: [
       { icon: "360", label: "Volledige 360° capture" },
@@ -69,9 +71,23 @@ const steps = [
 ];
 
 const gallery = [
-  { src: "/images/sfeer-1.jpg", alt: "Lachende mensen bij photobooth" },
-  { src: "/images/sfeer-2.jpg", alt: "Geprinte fotostrips" },
-  { src: "/images/sfeer-3.jpg", alt: "Photobooth scherm met neon verlichting" },
+  {
+    type: "video",
+    src: "/videos/sfeer-1.mp4",
+    alt: "Gasten poseren met props bij de photobooth",
+  },
+  {
+    type: "image",
+    src: "/images/sfeer-1.jpg",
+    alt: "Lachende gasten bij de photobooth",
+  },
+  { type: "image", src: "/images/sfeer-2.jpg", alt: "Geprinte fotostrips" },
+  {
+    type: "video",
+    src: "/videos/sfeer-2.mp4",
+    alt: "Lachende gasten op de borrel",
+  },
+  { type: "image", src: "/images/sfeer-3.jpg", alt: "Gast met zijn fotostrip" },
 ];
 
 export default function Home() {
@@ -132,12 +148,24 @@ export default function Home() {
                 }`}
               >
                 <div className="image-card aspect-[4/5] bg-surface-container relative">
-                  <Photo
-                    src={booth.image}
-                    alt={booth.alt}
-                    label={booth.title}
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
+                  {booth.video ? (
+                    <video
+                      src={booth.video}
+                      poster={booth.image}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Photo
+                      src={booth.image}
+                      alt={booth.alt}
+                      label={booth.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  )}
                 </div>
                 <div>
                   <h3 className="text-2xl font-semibold text-primary mb-2">
@@ -255,16 +283,28 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {gallery.map((img) => (
+            {gallery.map((item) => (
               <div
-                key={img.src}
+                key={item.src}
                 className="image-card aspect-[3/4] bg-surface-container relative shadow-sm"
               >
-                <Photo
-                  src={img.src}
-                  alt={img.alt}
-                  className="absolute inset-0 w-full h-full object-cover rounded-lg"
-                />
+                {item.type === "video" ? (
+                  <video
+                    src={item.src}
+                    aria-label={item.alt}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover rounded-lg"
+                  />
+                ) : (
+                  <Photo
+                    src={item.src}
+                    alt={item.alt}
+                    className="absolute inset-0 w-full h-full object-cover rounded-lg"
+                  />
+                )}
               </div>
             ))}
           </div>

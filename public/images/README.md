@@ -5,15 +5,16 @@ vervangen. Zolang een bestand ontbreekt, toont de site automatisch een nette
 placeholder (de site gaat dus nooit "stuk").
 
 ## Collectie (productkaarten)
-- `fotobooth.jpg` — de fotobooth met directe print
-- `spinnerbooth.jpg` — de 360° spinnerbooth
+- `fotobooth.jpg` — de fotobooth met directe print ✅ aanwezig
+  (de photobooth-kaart toont nu de video `/videos/booth-showcase.mp4`;
+  deze foto is de poster/fallback)
+- `spinnerbooth.jpg` — de 360° spinnerbooth ⬅️ NOG NODIG (nu placeholder)
 
 Aanbevolen: **verticaal**, verhouding **4:5** (bijv. 1200×1500 px).
 
 ## Sfeerimpressie (galerij)
-- `sfeer-1.jpg`
-- `sfeer-2.jpg`
-- `sfeer-3.jpg`
+- `sfeer-1.jpg` ✅, `sfeer-2.jpg` ✅, `sfeer-3.jpg` ✅
+- Video's staan in `/public/videos/`: `sfeer-1.mp4`, `sfeer-2.mp4`
 
 Aanbevolen: **verticaal**, verhouding **3:4** (bijv. 1200×1600 px).
 
