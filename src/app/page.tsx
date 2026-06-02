@@ -2,14 +2,31 @@ import Navbar from "./components/Navbar";
 import BookingForm from "./components/BookingForm";
 import Photo from "./components/Photo";
 import Pricing from "./components/Pricing";
+import {
+  INSTAGRAM_URL,
+  INSTAGRAM_HANDLE,
+  EMAIL,
+  PHONE_DISPLAY,
+  PHONE_TEL,
+  COMPANY_NAME,
+  ADDRESS_STREET,
+  ADDRESS_CITY,
+  KVK,
+  BTW,
+} from "./site";
+
+const InstagramIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+  </svg>
+);
 
 const booths = [
   {
     title: "Fotobooth met directe print",
     description:
       "Hoogwaardige kwaliteit in seconden. Creëer tastbare herinneringen met professionele belichting en directe fysieke prints voor je gasten.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuB2pyartU19EqJGuP1oPVBryyn8nwtaTfRAcBZPxcdkCUYXP1aSWhltLO54Io-HcRSndR832H8mGO5__EfD8M1aufcI9mmywjWixDQe27-qSvR2M330flNvhmgak3b6yColk8ZJKsQ59mUTzrDyOBCHW0fB2TAzSqX6P37kpE3coSckPMlL3Scud_s77Q036I27vZ0_Mo420ZaAJIC-cc2yR3lSwInLDYn41SeKXPP28S9ryrODyMf0q0mox_BTh5TohokZ5x_qiGRj",
+    image: "/images/fotobooth.jpg",
     alt: "Fotobooth met directe print",
     features: [
       { icon: "print", label: "Directe premium prints" },
@@ -22,8 +39,7 @@ const booths = [
     title: "360° Spinnerbooth",
     description:
       "Deze booth beschikt over een roterende arm waaraan je je eigen mobiele telefoon kunt bevestigen om cinematografische 360° video's te maken. Direct klaar om te delen en perfect voor social media.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuC9UsmpUfufNQYk8o7v2IXo5AxS5Z3kfXFcutZp3lCqW_7vRjWetbkmFNfPve7jTQQbDhWb6qUhlOH8fLbEC8SXMRXx50tu-LFk8v3v_0OuMP20564FPommtQYojjBD8e3SnAmSGu_Vf9pmYv2dqQ-qiHPJmnfOQB-eRejEAq1t_SNVfqP5_YaTeKOqJoK0TkhpSqG1gmvOwM0oDi1MKZ4eLh-2voEEkb2_cnXo0V46rb6-0YvCAopBfKxpMK8gCyR-LZzpq2922R5w",
+    image: "/images/spinnerbooth.jpg",
     alt: "360° Spinnerbooth",
     features: [
       { icon: "360", label: "Volledige 360° capture" },
@@ -53,18 +69,9 @@ const steps = [
 ];
 
 const gallery = [
-  {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuA7LDEds087AxUPpF1yU4vx0bSWMzTPsei5eAFHQy6Ou_pc1HlnlAZWPHMKPeh4u3L3N93prHXxHTmbi3RdcdQ-hRXiy5E2srdfsDNZT8MWJyReMS-E3_TdUPhjtiGkKYX8DLqJWeGS8e4o7hUw7CLUrH79twiHetwkmSNgvLJi8GdVz2qKZqqBWMt9XfogH_roFzBkgYvz5yMNs6y5AGvx4CoHcPTHPED95KoOmv5Ys4ERgu7uqBZsB5YNo5RMbKy7OYrHaOUxeqj9",
-    alt: "Lachende mensen bij photobooth",
-  },
-  {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuB5UdmVX7VN-cYehL1uA5FWRqNzTB3tuyA1IlpcEshDlMMa510zwhulWBlMVZcydo2_21K5_2TL0RBnRwNl74-Iy4CHJCRubIJaOoLoKw5XpywdVWSUiSWgkVvityDfvPgBAUQs4jqySsUwJfBpDeuvChRx0GNIUAUhSQ2SuvgW_M3Hq0yesIIURywb4Rgxj1laUCmCz1yjpxUTKDxmtwlCBDY-wVlF8sWkg3RQ2JzObO9-ScTS0K8rjO__26LfvuGc6jhKkDVH1Qtg",
-    alt: "Geprinte fotostrips",
-  },
-  {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAGByV8bGuDcqUmskEzkgFj0XXl22vpDHng2dYjP-By7CGXkfjU6cmmp5inSRqFrV_Zhfp6NynbiH2FxvftCqFylg2v-H5xVvuphhqY4YGRjm0WIZnsRo8jbUNu9Kt_pILNd3GSIrImnyPv3bHUw3bTBjrayslJfiLpGOxybEdlRWxprr6ggJWZmrtMfY8XKjnyS0OiT1lN7DqmipR5W-IiKSpGbSUmivZymX60fZhMGWiYFEAUh0ZZAYhCx13xDCqtAk3fysEuBOCI",
-    alt: "Photobooth scherm met neon verlichting",
-  },
+  { src: "/images/sfeer-1.jpg", alt: "Lachende mensen bij photobooth" },
+  { src: "/images/sfeer-2.jpg", alt: "Geprinte fotostrips" },
+  { src: "/images/sfeer-3.jpg", alt: "Photobooth scherm met neon verlichting" },
 ];
 
 export default function Home() {
@@ -128,6 +135,7 @@ export default function Home() {
                   <Photo
                     src={booth.image}
                     alt={booth.alt}
+                    label={booth.title}
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                 </div>
@@ -290,7 +298,7 @@ export default function Home() {
         id="contact"
         className="w-full py-16 md:py-24 bg-surface border-t border-border-subtle"
       >
-        <div className="max-w-[1280px] mx-auto px-5 md:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="max-w-[1280px] mx-auto px-5 md:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="flex flex-col gap-4">
             <span className="text-lg font-bold text-primary">Flashframe</span>
             <p className="text-base text-on-surface-variant opacity-60">
@@ -309,25 +317,83 @@ export default function Home() {
                 Producten
               </a>
               <a
+                href="#pricing"
+                className="text-base text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity"
+              >
+                Prijzen
+              </a>
+              <a
                 href="#booking"
                 className="text-base text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity"
               >
                 Beschikbaarheid
               </a>
+            </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            <h4 className="text-xs font-semibold tracking-wider uppercase text-primary">
+              Contact
+            </h4>
+            <div className="flex flex-col gap-2">
+              <p className="text-base text-on-surface-variant opacity-60">
+                {ADDRESS_STREET}
+                <br />
+                {ADDRESS_CITY}
+              </p>
               <a
-                href="mailto:info@flashframe.nl"
+                href={`tel:${PHONE_TEL}`}
                 className="text-base text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity"
               >
-                info@flashframe.nl
+                {PHONE_DISPLAY}
+              </a>
+              <a
+                href={`mailto:${EMAIL}`}
+                className="text-base text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity"
+              >
+                {EMAIL}
+              </a>
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-base text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity"
+              >
+                <InstagramIcon className="w-4 h-4" />
+                {INSTAGRAM_HANDLE}
               </a>
             </div>
           </div>
-          <div className="flex flex-col gap-4 justify-end md:text-right">
-            <p className="text-base text-on-surface-variant opacity-60 mt-auto">
-              © {new Date().getFullYear()} Flashframe. Premium Photobooth
-              Rentals.
+          <div className="flex flex-col gap-3 md:items-end md:text-right">
+            <h4 className="text-xs font-semibold tracking-wider uppercase text-primary">
+              Volg ons
+            </h4>
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open onze Instagram"
+              className="image-card bg-surface-bright p-2 w-32 h-32"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/instagram-qr.svg"
+                alt="QR-code naar de Instagram van Flashframe"
+                className="w-full h-full"
+              />
+            </a>
+            <p className="text-xs text-on-surface-variant opacity-60">
+              Scan voor onze Instagram
             </p>
           </div>
+        </div>
+        <div className="max-w-[1280px] mx-auto px-5 md:px-8 mt-12 pt-8 border-t border-border-subtle flex flex-col md:flex-row md:justify-between gap-2">
+          <p className="text-sm text-on-surface-variant opacity-60">
+            © {new Date().getFullYear()} {COMPANY_NAME}. Premium Photobooth
+            Rentals.
+          </p>
+          <p className="text-sm text-on-surface-variant opacity-60">
+            KvK {KVK} · BTW {BTW}
+          </p>
         </div>
       </footer>
     </>

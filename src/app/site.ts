@@ -1,7 +1,26 @@
-// Centrale contactgegevens. Vervang het WhatsApp-nummer door het echte nummer
-// (internationaal formaat, zonder + of spaties), bijv. 31612345678.
-export const WHATSAPP_NUMBER = "31600000000"; // TODO: vervang door echt nummer
+// Centrale contactgegevens. Pas hier aan en het verandert overal op de site.
+
+// Telefoon/WhatsApp in internationaal formaat (zonder + of spaties).
+export const WHATSAPP_NUMBER = "31681193292";
+
+// Net leesbaar telefoonnummer voor weergave.
+export const PHONE_DISPLAY = "06 8119 3292";
+export const PHONE_TEL = "+31681193292";
 
 export const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   "Hoi Flashframe! Ik heb een vraag over het huren van een photobooth."
 )}`;
+
+// Social
+export const INSTAGRAM_URL = "https://www.instagram.com/photoboothflashframe1";
+export const INSTAGRAM_HANDLE = "@photoboothflashframe1";
+
+// E-mail (TODO: vervangen zodra het definitieve adres bekend is)
+export const EMAIL = "info@flashframe.nl";
+
+// Bedrijfsgegevens (voor footer / legal)
+export const COMPANY_NAME = "Flashframe Photobooth";
+export const ADDRESS_STREET = "Saendelverlaan 161";
+export const ADDRESS_CITY = "1567 JE Assendelft";
+export const KVK = "34384037";
+export const BTW = "NL189130921B01";
