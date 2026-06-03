@@ -75,10 +75,13 @@ Velden die de bezoeker invult:
 - [x] Opmerkingen (optioneel)
 
 Gedrag:
-- [x] Bij verzenden gaat de aanvraag via **Web3Forms** naar de e-mail van de
-      eigenaar.
+- [x] Bij verzenden post het formulier naar een eigen **server-side API-route**
+      (`/api/contact`), die de aanvraag via **Resend** als e-mail naar de
+      eigenaar stuurt.
+- [x] Honeypot-veld tegen spam (door bots ingevuld, voor mensen verborgen).
 - [x] Bevestigingsbericht voor de bezoeker na succesvol verzenden.
-- [ ] **Web3Forms access key** moet nog ingesteld worden (zie sectie 7).
+- [ ] **Resend API-key + geverifieerd afzenddomein** moeten nog ingesteld worden
+      (zie sectie 7).
 
 ### 4.3 Design
 - [x] **Apple-achtige stijl**: strakke typografie, veel ruimte, rustige opbouw.
@@ -102,7 +105,7 @@ Gedrag:
 |---|---|
 | Framework | Next.js (App Router, TypeScript) |
 | Styling | Tailwind CSS |
-| Formulier-afhandeling | Web3Forms (stuurt e-mail naar eigenaar) |
+| Formulier-afhandeling | Resend (eigen `/api/contact`-route stuurt e-mail naar eigenaar) |
 | Versiebeheer | GitHub (`r-ramphal/flashframe`, branch `main`) |
 | Hosting | Vercel (automatische deploy bij elke push naar `main`) |
 
@@ -118,11 +121,14 @@ flashframe/
 │  ├─ layout.tsx           # lettertype, metadata
 │  ├─ globals.css          # kleuren & basisstijl
 │  ├─ page.tsx             # alle secties van de homepage
+│  ├─ content.ts           # gedeelde content (booths, prijzen, galerij, copy)
+│  ├─ api/contact/route.ts # server-side route: verstuurt aanvraag via Resend
 │  └─ components/
 │     ├─ Navbar.tsx        # navigatiebalk + mobiel menu
-│     ├─ BoothImage.tsx    # fotoblok met placeholder-fallback
-│     └─ BookingForm.tsx   # boekingsformulier (Web3Forms)
-├─ .env.local              # Web3Forms key (niet in Git)
+│     ├─ Photo.tsx         # fotoblok met placeholder-fallback
+│     └─ BookingForm.tsx   # boekingsformulier (post naar /api/contact)
+├─ .env.example            # voorbeeld-env (Resend-vars) — wél in Git
+├─ .env.local              # echte Resend-key e.d. (niet in Git)
 └─ REQUIREMENTS.md         # dit document
 ```
 
@@ -130,9 +136,14 @@ flashframe/
 
 ## 7. Nog te doen (open punten)
 
-- [ ] **Web3Forms key** aanmaken op web3forms.com en instellen:
-      - Lokaal in `.env.local` → `NEXT_PUBLIC_WEB3FORMS_KEY=...`
-      - In Vercel onder Settings → Environment Variables → daarna Redeploy.
+- [ ] **Resend opzetten** (zie `.env.example` voor alle variabelen):
+      1. Account maken op resend.com en een **API-key** genereren.
+      2. Een **domein verifiëren** (bijv. `flashframe.nl`) voor het afzenderadres,
+         of tijdelijk `onboarding@resend.dev` gebruiken om te testen.
+      3. Instellen in `.env.local` → `RESEND_API_KEY=...` (plus optioneel
+         `BOOKING_TO_EMAIL` en `RESEND_FROM`).
+      4. Dezelfde variabelen in Vercel onder Settings → Environment Variables →
+         daarna Redeploy.
 - [ ] **Echte foto's** toevoegen in `public/images/`:
       `spinnerbooth.jpg` en `fotobooth.jpg`.
 - [ ] **Definitieve teksten** van de eigenaar verwerken.

@@ -49,21 +49,10 @@ export const booths: Booth[] = [
     image: "/images/fotobooth.jpg",
     alt: "Fotobooth met directe print",
     features: [
-      { icon: "print", label: "Directe fysieke prints" },
+      { icon: "print", label: "Onbeperkte fysieke prints" },
       { icon: "lightbulb", label: "Studio-kwaliteit ringlamp" },
-      { icon: "palette", label: "Eigen branding mogelijk" },
-    ],
-  },
-  {
-    title: "360° Spinnerbooth",
-    description:
-      "Deze booth beschikt over een roterende arm waaraan je je eigen mobiele telefoon kunt bevestigen om cinematografische 360° video's te maken. Direct klaar om te delen en perfect voor social media.",
-    image: "/images/spinnerbooth.jpg",
-    alt: "360° Spinnerbooth",
-    features: [
-      { icon: "360", label: "Volledige 360° capture" },
-      { icon: "share", label: "Direct digitaal delen" },
-      { icon: "movie", label: "Slow-motion effecten" },
+      { icon: "tv_options_edit_channels", label: "Gepersonaliseerd startscherm" },
+      { icon: "celebration", label: "Props inbegrepen" },
     ],
   },
 ];
@@ -152,46 +141,60 @@ export const galleryItems: GalleryItem[] = [
 
 export const pricingPlans: PricingPlan[] = [
   {
-    name: "Fotobooth",
-    price: "€295",
+    name: "Basic",
+    price: "€250",
     unit: "per evenement",
-    desc: "De klassieker met directe fysieke prints.",
+    desc: "Alles wat je nodig hebt voor een geslaagde fotobooth-ervaring.",
     features: [
-      "3 uur huur",
-      "Onbeperkt fysieke prints",
-      "Professionele belichting (ringlamp)",
-      "Diverse props inbegrepen",
-      "Op- en afbouw inbegrepen",
+      "2 uur fotoboothservice",
+      "Onbeperkte prints",
+      "Gepersonaliseerd startscherm",
+      "Props inbegrepen",
+      "Inclusief op- en afbouw",
     ],
     highlighted: false,
   },
   {
-    name: "360° Spinnerbooth",
-    price: "€395",
+    name: "Basic Plus",
+    price: "€350",
     unit: "per evenement",
-    desc: "Cinematische 360° video's, klaar voor social media.",
+    desc: "De Basic, maar langer én met rode loper voor extra sfeer.",
     features: [
-      "3 uur huur",
-      "Onbeperkte 360° video-opnames",
-      "Direct digitaal delen",
-      "Slow-motion & effecten",
-      "Custom overlay met jouw naam/logo",
-      "Op- en afbouw inbegrepen",
+      "4 uur fotoboothservice",
+      "Onbeperkte prints",
+      "Gepersonaliseerd startscherm",
+      "Props inbegrepen",
+      "Rode loper",
+      "Foto's direct delen via QR-code",
+      "Inclusief op- en afbouw",
     ],
     highlighted: true,
   },
   {
-    name: "Compleet pakket",
-    price: "€650",
+    name: "Complete Pakket",
+    price: "€450",
     unit: "per evenement",
-    desc: "Beide booths voor de ultieme ervaring.",
+    desc: "Het complete plaatje, inclusief digitale foto's en assistentie.",
     features: [
-      "Fotobooth én 360° Spinnerbooth",
-      "4 uur huur",
-      "Professionele host aanwezig",
-      "Onbeperkt prints én video's",
-      "Online galerij achteraf",
+      "4 uur fotoboothservice",
+      "Onbeperkte prints",
+      "Gepersonaliseerd startscherm",
+      "Props inbegrepen",
+      "Rode loper",
+      "Foto's direct delen via QR-code",
+      "Alle foto's achteraf digitaal",
+      "Persoonlijke assistentie aanwezig",
+      "Inclusief op- en afbouw",
     ],
     highlighted: false,
   },
 ];
+
+// Extra uren zijn bij elk pakket mogelijk (op aanvraag).
+export const extraHoursNote =
+  "Meer tijd nodig? Bij elk pakket zijn extra uren mogelijk — vraag gerust naar de mogelijkheden.";
+
+// Reiskosten buiten de regio. De eerste 15 km vanaf Assendelft zijn gratis,
+// daarna geldt een kilometervergoeding.
+export const travelCostNote =
+  "Reiskosten: de eerste 15 km vanaf Assendelft zijn gratis, daarna €0,30 per kilometer.";

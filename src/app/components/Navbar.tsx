@@ -8,8 +8,7 @@ const links = [
   { label: "Producten", href: "#products" },
   { label: "Prijzen", href: "#pricing" },
   { label: "Hoe het werkt", href: "#how-it-works" },
-  { label: "Beschikbaarheid", href: "#booking" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "#booking" },
 ];
 
 export default function Navbar() {
@@ -33,7 +32,8 @@ export default function Navbar() {
           href="#top"
           className="text-lg font-bold tracking-tight text-primary"
         >
-          Flashframe
+          Flashframe{" "}
+          <span className="font-medium text-on-surface-variant">Photobooth</span>
         </a>
 
         {/* Desktop links */}

@@ -288,7 +288,7 @@ export default function OntwerpBold() {
         <section id="booking" className="mx-auto max-w-3xl px-5 py-20 md:px-8 md:py-28">
           <div className="mb-10 text-center">
             <h2 className="text-3xl font-semibold tracking-tight text-white md:text-4xl">
-              Check beschikbaarheid
+              Neem contact op
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-white/50">
               Vul het formulier in en we nemen binnen 24 uur contact met je op.

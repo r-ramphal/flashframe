@@ -25,6 +25,8 @@ const InstagramIcon = ({ className }: { className?: string }) => (
 );
 
 export default function Home() {
+  const booth = booths[0];
+
   return (
     <>
       <DesignSwitcher current={1} />
@@ -60,55 +62,57 @@ export default function Home() {
           </div>
         </section>
 
-        {/* PRODUCTEN */}
+        {/* PRODUCT */}
         <section
           id="products"
           className="py-24 md:py-32 px-5 md:px-8 max-w-[1280px] mx-auto"
         >
-          <div className="mb-16 md:mb-24 text-center md:text-left">
+          <div className="mb-12 md:mb-16 text-center md:text-left">
             <h2 className="text-[28px] md:text-[32px] font-semibold tracking-tight text-primary mb-4">
-              Onze collectie
+              De fotobooth
             </h2>
             <p className="text-base text-on-surface-variant max-w-xl">
-              Twee manieren om je gasten te verrassen: van directe fotoprints
-              tot cinematische 360°-video's.
+              Eén booth, alles erop en eraan: directe fysieke prints, een
+              gepersonaliseerd startscherm en props voor je gasten.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
-            {booths.map((booth) => (
-              <div key={booth.title} className="group flex flex-col gap-6">
-                <div className="image-card aspect-[4/5] bg-surface-container relative">
-                  <Photo
-                    src={booth.image}
-                    alt={booth.alt}
-                    label={booth.title}
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-semibold text-primary mb-2">
-                    {booth.title}
-                  </h3>
-                  <p className="text-base text-on-surface-variant mb-5">
-                    {booth.description}
-                  </p>
-                  <ul className="flex flex-col gap-2.5">
-                    {booth.features.map((f) => (
-                      <li
-                        key={f.label}
-                        className="flex items-center gap-3 text-base text-on-surface"
-                      >
-                        <span className="material-symbols-outlined text-[20px] text-secondary">
-                          {f.icon}
-                        </span>
-                        {f.label}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+            <div className="image-card aspect-[4/5] bg-surface-container relative">
+              <Photo
+                src={booth.image}
+                alt={booth.alt}
+                label={booth.title}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <h3 className="text-2xl font-semibold text-primary mb-3">
+                {booth.title}
+              </h3>
+              <p className="text-base text-on-surface-variant mb-6">
+                {booth.description}
+              </p>
+              <ul className="flex flex-col gap-3">
+                {booth.features.map((f) => (
+                  <li
+                    key={f.label}
+                    className="flex items-center gap-3 text-base text-on-surface"
+                  >
+                    <span className="material-symbols-outlined text-[20px] text-secondary">
+                      {f.icon}
+                    </span>
+                    {f.label}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="#booking"
+                className="btn-primary mt-8 inline-flex px-8 py-3 rounded-full text-xs font-semibold tracking-wider uppercase"
+              >
+                Boek de fotobooth
+              </a>
+            </div>
           </div>
         </section>
 
@@ -187,7 +191,7 @@ export default function Home() {
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-[28px] md:text-[32px] font-semibold tracking-tight text-primary mb-4">
-                Check beschikbaarheid
+                Neem contact op
               </h2>
               <p className="text-base text-on-surface-variant">
                 Vul het formulier in en we nemen binnen 24 uur contact met je op
@@ -206,7 +210,12 @@ export default function Home() {
       >
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="flex flex-col gap-4">
-            <span className="text-lg font-bold text-primary">Flashframe</span>
+            <span className="text-lg font-bold text-primary">
+              Flashframe{" "}
+              <span className="font-medium text-on-surface-variant">
+                Photobooth
+              </span>
+            </span>
             <p className="text-base text-on-surface-variant opacity-60">
               Photobooth-verhuur voor bruiloften, bedrijfsfeesten en
               evenementen.
@@ -233,7 +242,7 @@ export default function Home() {
                 href="#booking"
                 className="text-base text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity"
               >
-                Beschikbaarheid
+                Contact
               </a>
             </div>
           </div>

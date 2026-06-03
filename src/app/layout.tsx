@@ -9,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Flashframe — Photobooth & 360° Spinnerbooth Verhuur",
+  title: "Flashframe Photobooth — Photobooth-verhuur",
   description:
-    "Flashframe verhuurt premium photobooths en 360° spinnerbooths voor onvergetelijke evenementen. Check beschikbaarheid en boek vandaag.",
+    "Flashframe Photobooth verhuurt een premium fotobooth met directe prints voor bruiloften, bedrijfsfeesten en evenementen. Neem contact op en boek je datum.",
 };
 
 export default function RootLayout({

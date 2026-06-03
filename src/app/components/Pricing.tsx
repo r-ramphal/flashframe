@@ -1,24 +1,33 @@
-// Prijzen zijn indicatief en gebaseerd op gangbare NL photobooth-verhuurtarieven.
 // Data staat centraal in content.ts (pricingPlans) zodat alle ontwerpen gelijk blijven.
-import { pricingPlans as plans } from "../content";
+import {
+  pricingPlans as plans,
+  extraHoursNote,
+  travelCostNote,
+} from "../content";
 
 export default function Pricing() {
+  const single = plans.length === 1;
+
   return (
     <section
       id="pricing"
       className="py-24 md:py-32 px-5 md:px-8 max-w-[1280px] mx-auto"
     >
-      <div className="mx-auto max-w-2xl text-center mb-12 md:mb-20">
+      <div className="mx-auto max-w-2xl text-center mb-12 md:mb-16">
         <h2 className="text-[28px] md:text-[32px] font-semibold tracking-tight text-primary mb-4">
-          Pakketten &amp; prijzen
+          Prijzen
         </h2>
         <p className="text-base text-on-surface-variant">
-          Transparante pakketten voor elk evenement. Op zoek naar maatwerk? Vraag
-          gerust een voorstel op maat aan.
+          Kies het pakket dat bij jouw evenement past. Op zoek naar maatwerk?
+          Vraag gerust een voorstel op maat aan.
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
+      <div
+        className={
+          single ? "max-w-md mx-auto" : "grid gap-6 md:grid-cols-3"
+        }
+      >
         {plans.map((plan) => (
           <div
             key={plan.name}
@@ -48,7 +57,7 @@ export default function Pricing() {
               <a
                 href="#booking"
                 className={`flex items-center justify-center w-full px-6 py-3 rounded-full text-xs font-semibold tracking-wider uppercase ${
-                  plan.highlighted ? "btn-primary" : "btn-outline"
+                  plan.highlighted || single ? "btn-primary" : "btn-outline"
                 }`}
               >
                 Aanvragen
@@ -72,10 +81,17 @@ export default function Pricing() {
         ))}
       </div>
 
-      <p className="text-center text-sm text-text-muted mt-10">
-        Genoemde prijzen zijn indicatief. Definitieve tarieven kunnen variëren op
-        basis van locatie, datum en wensen.
-      </p>
+      <div className="mt-10 flex flex-col items-center gap-3">
+        <p className="flex items-center gap-2 rounded-full bg-surface-faint px-4 py-2 text-sm font-medium text-on-surface">
+          <span className="material-symbols-outlined text-[18px] text-secondary">
+            schedule
+          </span>
+          {extraHoursNote}
+        </p>
+        <p className="text-center text-sm text-text-muted max-w-xl">
+          {travelCostNote}
+        </p>
+      </div>
     </section>
   );
 }

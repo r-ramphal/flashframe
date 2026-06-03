@@ -251,7 +251,7 @@ export default function OntwerpMinimal() {
             <div className="mb-10">
               <p className={kicker}>06 — contact</p>
               <h2 className="mt-4 text-2xl font-semibold tracking-tight md:text-3xl">
-                Check beschikbaarheid
+                Neem contact op
               </h2>
               <p className="mt-3 text-sm text-neutral-500">
                 Vul het formulier in en we nemen binnen 24 uur contact met je op.

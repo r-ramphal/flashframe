@@ -24,16 +24,11 @@ export default function BookingForm() {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      // Verstuurt naar onze eigen server-side route, die via Resend mailt.
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
-          subject: "Nieuwe boekingsaanvraag via Flashframe",
-          from_name: "Flashframe website",
-          replyto: data.email,
-          ...data,
-        }),
+        body: JSON.stringify(data),
       });
 
       const result = await response.json();
@@ -42,7 +37,8 @@ export default function BookingForm() {
         setSubmitted(true);
       } else {
         setError(
-          "Er ging iets mis bij het versturen. Probeer het opnieuw of mail ons direct."
+          result.error ||
+            "Er ging iets mis bij het versturen. Probeer het opnieuw of mail ons direct."
         );
       }
     } catch {
@@ -139,49 +135,27 @@ export default function BookingForm() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
-          <label className={labelClass} htmlFor="booth-choice">
-            Welke booth zoek je?
-          </label>
-          <select
-            id="booth-choice"
-            name="booth"
-            required
-            defaultValue=""
-            className={`${fieldClass} cursor-pointer`}
-          >
-            <option disabled value="">
-              Kies een optie
-            </option>
-            <option value="Fotobooth met directe print">
-              Fotobooth met directe print
-            </option>
-            <option value="360 Spinnerbooth">360° Spinnerbooth</option>
-            <option value="Advies nodig">Weet ik nog niet / advies nodig</option>
-          </select>
-        </div>
-        <div>
-          <label className={labelClass} htmlFor="event-type">
-            Type evenement
-          </label>
-          <select
-            id="event-type"
-            name="evenement"
-            required
-            defaultValue=""
-            className={`${fieldClass} cursor-pointer`}
-          >
-            <option disabled value="">
-              Kies een optie
-            </option>
-            <option value="Bruiloft">Bruiloft</option>
-            <option value="Bedrijfsfeest">Bedrijfsfeest</option>
-            <option value="Verjaardag">Verjaardag</option>
-            <option value="Afstudeerfeest">Afstudeerfeest</option>
-            <option value="Overig">Overig</option>
-          </select>
-        </div>
+      <div>
+        <label className={labelClass} htmlFor="event-type">
+          Type evenement
+        </label>
+        <select
+          id="event-type"
+          name="evenement"
+          required
+          defaultValue=""
+          className={`${fieldClass} cursor-pointer`}
+        >
+          <option disabled value="">
+            Kies een optie
+          </option>
+          <option value="Bruiloft">Bruiloft</option>
+          <option value="Bedrijfsfeest">Bedrijfsfeest</option>
+          <option value="Verjaardag">Verjaardag</option>
+          <option value="Babyshower">Babyshower</option>
+          <option value="Afstudeerfeest">Afstudeerfeest</option>
+          <option value="Overig">Overig</option>
+        </select>
       </div>
 
       <div>

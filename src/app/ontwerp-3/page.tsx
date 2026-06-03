@@ -232,7 +232,7 @@ export default function OntwerpEditorial() {
           <div className="mx-auto max-w-3xl px-5 py-16 md:px-8 md:py-24">
             <div className="mb-10 text-center">
               <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-                Check beschikbaarheid
+                Neem contact op
               </h2>
               <p className="mt-4 font-sans text-lg text-neutral-600">
                 Vul het formulier in en we nemen binnen 24 uur contact met je op.
