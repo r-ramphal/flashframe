@@ -3,7 +3,6 @@ import BookingForm from "./components/BookingForm";
 import Photo from "./components/Photo";
 import Pricing from "./components/Pricing";
 import ExampleCarousel from "./components/ExampleCarousel";
-import DesignSwitcher from "./components/DesignSwitcher";
 import {
   INSTAGRAM_URL,
   INSTAGRAM_HANDLE,
@@ -29,7 +28,6 @@ export default function Home() {
 
   return (
     <>
-      <DesignSwitcher current={1} />
       <Navbar />
       <main id="top" className="pt-[80px]">
         {/* HERO */}
