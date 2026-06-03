@@ -1,50 +1,6 @@
 // Prijzen zijn indicatief en gebaseerd op gangbare NL photobooth-verhuurtarieven.
-// De eigenaar kan namen, prijzen en inbegrepen items hier eenvoudig aanpassen.
-const plans = [
-  {
-    name: "Fotobooth",
-    price: "€295",
-    unit: "per evenement",
-    desc: "De klassieker met directe fysieke prints.",
-    features: [
-      "3 uur huur",
-      "Onbeperkt fysieke prints",
-      "Professionele belichting (ringlamp)",
-      "Diverse props inbegrepen",
-      "Op- en afbouw inbegrepen",
-    ],
-    highlighted: false,
-  },
-  {
-    name: "360° Spinnerbooth",
-    price: "€395",
-    unit: "per evenement",
-    desc: "Cinematische 360° video's, klaar voor social media.",
-    features: [
-      "3 uur huur",
-      "Onbeperkte 360° video-opnames",
-      "Direct digitaal delen",
-      "Slow-motion & effecten",
-      "Custom overlay met jouw naam/logo",
-      "Op- en afbouw inbegrepen",
-    ],
-    highlighted: true,
-  },
-  {
-    name: "Compleet pakket",
-    price: "€650",
-    unit: "per evenement",
-    desc: "Beide booths voor de ultieme ervaring.",
-    features: [
-      "Fotobooth én 360° Spinnerbooth",
-      "4 uur huur",
-      "Professionele host aanwezig",
-      "Onbeperkt prints én video's",
-      "Online galerij achteraf",
-    ],
-    highlighted: false,
-  },
-];
+// Data staat centraal in content.ts (pricingPlans) zodat alle ontwerpen gelijk blijven.
+import { pricingPlans as plans } from "../content";
 
 export default function Pricing() {
   return (

@@ -3,6 +3,7 @@ import BookingForm from "./components/BookingForm";
 import Photo from "./components/Photo";
 import Pricing from "./components/Pricing";
 import ExampleCarousel from "./components/ExampleCarousel";
+import DesignSwitcher from "./components/DesignSwitcher";
 import {
   INSTAGRAM_URL,
   INSTAGRAM_HANDLE,
@@ -15,6 +16,7 @@ import {
   KVK,
   BTW,
 } from "./site";
+import { booths, steps, whyCards } from "./content";
 
 const InstagramIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
@@ -22,54 +24,10 @@ const InstagramIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const booths = [
-  {
-    title: "Fotobooth met directe print",
-    description:
-      "Hoogwaardige kwaliteit in seconden. Creëer tastbare herinneringen met professionele belichting en directe fysieke prints voor je gasten.",
-    image: "/images/fotobooth.jpg",
-    alt: "Fotobooth met directe print",
-    features: [
-      { icon: "print", label: "Directe fysieke prints" },
-      { icon: "lightbulb", label: "Studio-kwaliteit ringlamp" },
-      { icon: "palette", label: "Eigen branding mogelijk" },
-    ],
-  },
-  {
-    title: "360° Spinnerbooth",
-    description:
-      "Deze booth beschikt over een roterende arm waaraan je je eigen mobiele telefoon kunt bevestigen om cinematografische 360° video's te maken. Direct klaar om te delen en perfect voor social media.",
-    image: "/images/spinnerbooth.jpg",
-    alt: "360° Spinnerbooth",
-    features: [
-      { icon: "360", label: "Volledige 360° capture" },
-      { icon: "share", label: "Direct digitaal delen" },
-      { icon: "movie", label: "Slow-motion effecten" },
-    ],
-  },
-];
-
-const steps = [
-  {
-    n: "1",
-    title: "Kies je booth",
-    desc: "Selecteer de booth die perfect bij jouw visie past.",
-  },
-  {
-    n: "2",
-    title: "Wij regelen de setup",
-    desc: "Ons team arriveert ruim op tijd voor een vlekkeloze installatie.",
-  },
-  {
-    n: "3",
-    title: "Maak onvergetelijke herinneringen",
-    desc: "Geniet van het moment, wij zorgen voor de rest.",
-  },
-];
-
 export default function Home() {
   return (
     <>
+      <DesignSwitcher current={1} />
       <Navbar />
       <main id="top" className="pt-[80px]">
         {/* HERO */}
@@ -193,42 +151,24 @@ export default function Home() {
             </div>
 
             <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-surface p-8 rounded-2xl border border-border-subtle flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow">
-                <span className="material-symbols-outlined text-[32px] text-secondary">
-                  verified
-                </span>
-                <h4 className="text-xl font-semibold text-primary">
-                  Zorgeloze ervaring
-                </h4>
-                <p className="text-base text-on-surface-variant">
-                  Van begin tot eind geregeld. Geen technische stress tijdens je
-                  evenement.
-                </p>
-              </div>
-              <div className="bg-surface p-8 rounded-2xl border border-border-subtle flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow">
-                <span className="material-symbols-outlined text-[32px] text-secondary">
-                  support_agent
-                </span>
-                <h4 className="text-xl font-semibold text-primary">
-                  Begeleiding op aanvraag
-                </h4>
-                <p className="text-base text-on-surface-variant">
-                  Desgewenst een host aanwezig om je gasten op weg te helpen.
-                </p>
-              </div>
-              <div className="bg-surface p-8 rounded-2xl border border-border-subtle flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow sm:col-span-2">
-                <span className="material-symbols-outlined text-[32px] text-secondary">
-                  high_quality
-                </span>
-                <h4 className="text-xl font-semibold text-primary">
-                  Hoogwaardige kwaliteit
-                </h4>
-                <p className="text-base text-on-surface-variant">
-                  Wij gebruiken uitsluitend professionele DSLR-camera&apos;s en
-                  studio-belichting voor het beste resultaat, afgedrukt op
-                  premium fotopapier of in hoge resolutie digitaal geleverd.
-                </p>
-              </div>
+              {whyCards.map((card, i) => (
+                <div
+                  key={card.title}
+                  className={`bg-surface p-8 rounded-2xl border border-border-subtle flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow ${
+                    i === whyCards.length - 1 ? "sm:col-span-2" : ""
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-[32px] text-secondary">
+                    {card.icon}
+                  </span>
+                  <h4 className="text-xl font-semibold text-primary">
+                    {card.title}
+                  </h4>
+                  <p className="text-base text-on-surface-variant">
+                    {card.desc}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </section>

@@ -3,61 +3,7 @@
 import { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Photo from "./Photo";
-
-type Item = {
-  id: string;
-  title: string;
-  description: string;
-  type: "image" | "video";
-  src: string;
-};
-
-const items: Item[] = [
-  {
-    id: "groep",
-    title: "Samen voor de lens",
-    description: "Gasten die volop genieten tijdens een bedrijfsborrel.",
-    type: "image",
-    src: "/images/sfeer-1.jpg",
-  },
-  {
-    id: "props",
-    title: "Props en plezier",
-    description:
-      "Maskers, hoeden en accessoires zorgen voor spontane reacties.",
-    type: "video",
-    src: "/videos/sfeer-1.mp4",
-  },
-  {
-    id: "print",
-    title: "Direct geprint",
-    description:
-      "Een fotostrip als tastbare herinnering, binnen seconden klaar.",
-    type: "image",
-    src: "/images/sfeer-2.jpg",
-  },
-  {
-    id: "vloer",
-    title: "Sfeer op de vloer",
-    description: "De booth als middelpunt van het feest.",
-    type: "video",
-    src: "/videos/sfeer-2.mp4",
-  },
-  {
-    id: "herinnering",
-    title: "Mee naar huis",
-    description: "Iedere gast gaat met een eigen afdruk de deur uit.",
-    type: "image",
-    src: "/images/sfeer-3.jpg",
-  },
-  {
-    id: "gezelschap",
-    title: "Voor elk gezelschap",
-    description: "Van collega's tot vrienden, iedereen doet mee.",
-    type: "image",
-    src: "/images/sfeer-4.jpg",
-  },
-];
+import { galleryItems as items } from "../content";
 
 export default function ExampleCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
