@@ -62,22 +62,22 @@ export default function Pricing() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3 items-start">
+      <div className="grid gap-6 md:grid-cols-3">
         {plans.map((plan) => (
           <div
             key={plan.name}
-            className={`flex flex-col rounded-2xl bg-surface-bright shadow-sm ${
+            className={`relative flex h-full flex-col rounded-2xl bg-surface-bright shadow-sm ${
               plan.highlighted
-                ? "border-2 border-secondary md:-mt-4 md:mb-4"
+                ? "border-2 border-secondary"
                 : "border border-border-subtle"
             }`}
           >
+            {plan.highlighted && (
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-secondary px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-on-primary">
+                Meest gekozen
+              </span>
+            )}
             <div className="p-8">
-              {plan.highlighted && (
-                <span className="inline-block mb-4 text-[11px] font-semibold tracking-wider uppercase text-on-primary bg-secondary px-3 py-1 rounded-full">
-                  Meest gekozen
-                </span>
-              )}
               <h3 className="text-xl font-semibold text-primary">{plan.name}</h3>
               <div className="mt-3 flex items-baseline gap-1">
                 <span className="text-4xl font-bold text-primary">

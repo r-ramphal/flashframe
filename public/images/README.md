@@ -12,11 +12,13 @@ placeholder (de site gaat dus nooit "stuk").
 
 Aanbevolen: **verticaal**, verhouding **4:5** (bijv. 1200×1500 px).
 
-## Sfeerimpressie (galerij)
-- `sfeer-1.jpg` ✅, `sfeer-2.jpg` ✅, `sfeer-3.jpg` ✅
-- Video's staan in `/public/videos/`: `sfeer-1.mp4`, `sfeer-2.mp4`
+## Sfeerimpressie (carousel)
+- `sfeer-1.jpg`, `sfeer-2.jpg`, `sfeer-3.jpg`, `sfeer-4.jpg`
+- Video's in `/public/videos/`: `sfeer-1.mp4`, `sfeer-2.mp4`
+- Worden getoond in de carousel (ExampleCarousel.tsx). Titels/teksten staan
+  daar in de `items`-array.
 
-Aanbevolen: **verticaal**, verhouding **3:4** (bijv. 1200×1600 px).
+Aanbevolen: **verticaal**, verhouding **4:5** (bijv. 1200×1500 px).
 
 ## Tips
 - Minimaal ~1200 px breed, hoge kwaliteit, goed licht.

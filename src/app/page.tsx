@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar";
 import BookingForm from "./components/BookingForm";
 import Photo from "./components/Photo";
 import Pricing from "./components/Pricing";
+import ExampleCarousel from "./components/ExampleCarousel";
 import {
   INSTAGRAM_URL,
   INSTAGRAM_HANDLE,
@@ -27,28 +28,24 @@ const booths = [
     description:
       "Hoogwaardige kwaliteit in seconden. Creëer tastbare herinneringen met professionele belichting en directe fysieke prints voor je gasten.",
     image: "/images/fotobooth.jpg",
-    video: "/videos/booth-showcase.mp4",
     alt: "Fotobooth met directe print",
     features: [
-      { icon: "print", label: "Directe premium prints" },
+      { icon: "print", label: "Directe fysieke prints" },
       { icon: "lightbulb", label: "Studio-kwaliteit ringlamp" },
-      { icon: "palette", label: "Custom branding mogelijk" },
+      { icon: "palette", label: "Eigen branding mogelijk" },
     ],
-    offset: false,
   },
   {
     title: "360° Spinnerbooth",
     description:
       "Deze booth beschikt over een roterende arm waaraan je je eigen mobiele telefoon kunt bevestigen om cinematografische 360° video's te maken. Direct klaar om te delen en perfect voor social media.",
     image: "/images/spinnerbooth.jpg",
-    video: "",
     alt: "360° Spinnerbooth",
     features: [
       { icon: "360", label: "Volledige 360° capture" },
       { icon: "share", label: "Direct digitaal delen" },
       { icon: "movie", label: "Slow-motion effecten" },
     ],
-    offset: true,
   },
 ];
 
@@ -70,26 +67,6 @@ const steps = [
   },
 ];
 
-const gallery = [
-  {
-    type: "video",
-    src: "/videos/sfeer-1.mp4",
-    alt: "Gasten poseren met props bij de photobooth",
-  },
-  {
-    type: "image",
-    src: "/images/sfeer-1.jpg",
-    alt: "Lachende gasten bij de photobooth",
-  },
-  { type: "image", src: "/images/sfeer-2.jpg", alt: "Geprinte fotostrips" },
-  {
-    type: "video",
-    src: "/videos/sfeer-2.mp4",
-    alt: "Lachende gasten op de borrel",
-  },
-  { type: "image", src: "/images/sfeer-3.jpg", alt: "Gast met zijn fotostrip" },
-];
-
 export default function Home() {
   return (
     <>
@@ -97,7 +74,8 @@ export default function Home() {
       <main id="top" className="pt-[80px]">
         {/* HERO */}
         <section className="min-h-[80vh] flex items-center justify-center px-5 md:px-8 py-24 md:py-32 max-w-[1280px] mx-auto relative overflow-hidden">
-          <div className="absolute inset-0 z-0 bg-[url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center opacity-10" />
+          <div className="absolute inset-0 z-0 bg-[url('/images/sfeer-1.jpg')] bg-cover bg-center" />
+          <div className="absolute inset-0 z-0 bg-gradient-to-b from-surface/70 via-surface/65 to-surface" />
           <div className="relative z-10 text-center max-w-4xl mx-auto flex flex-col items-center gap-8">
             <h1 className="text-[40px] sm:text-[48px] md:text-[72px] text-primary leading-[1.1] tracking-[-0.03em] md:tracking-[-0.04em] font-semibold">
               Leg elk moment <br />
@@ -134,50 +112,36 @@ export default function Home() {
               Onze collectie
             </h2>
             <p className="text-base text-on-surface-variant max-w-xl">
-              Ontworpen om naadloos op te gaan in elk premium evenement. Ontdek
-              onze hoogwaardige photobooths.
+              Twee manieren om je gasten te verrassen: van directe fotoprints
+              tot cinematische 360°-video's.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
             {booths.map((booth) => (
-              <div
-                key={booth.title}
-                className={`group flex flex-col gap-6 ${
-                  booth.offset ? "md:mt-24" : ""
-                }`}
-              >
+              <div key={booth.title} className="group flex flex-col gap-6">
                 <div className="image-card aspect-[4/5] bg-surface-container relative">
-                  {booth.video ? (
-                    <video
-                      src={booth.video}
-                      poster={booth.image}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  ) : (
-                    <Photo
-                      src={booth.image}
-                      alt={booth.alt}
-                      label={booth.title}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  )}
+                  <Photo
+                    src={booth.image}
+                    alt={booth.alt}
+                    label={booth.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
                 </div>
                 <div>
                   <h3 className="text-2xl font-semibold text-primary mb-2">
                     {booth.title}
                   </h3>
-                  <p className="text-base text-on-surface-variant mb-4">
+                  <p className="text-base text-on-surface-variant mb-5">
                     {booth.description}
                   </p>
-                  <ul className="flex flex-col gap-2 text-xs font-semibold tracking-wider uppercase text-primary opacity-80">
+                  <ul className="flex flex-col gap-2.5">
                     {booth.features.map((f) => (
-                      <li key={f.label} className="flex items-center gap-2">
-                        <span className="material-symbols-outlined text-[18px]">
+                      <li
+                        key={f.label}
+                        className="flex items-center gap-3 text-base text-on-surface"
+                      >
+                        <span className="material-symbols-outlined text-[20px] text-secondary">
                           {f.icon}
                         </span>
                         {f.label}
@@ -212,7 +176,7 @@ export default function Home() {
                         {step.n}
                       </div>
                       <div>
-                        <h4 className="text-xs font-semibold tracking-wider uppercase text-primary mb-1">
+                        <h4 className="text-base font-semibold text-primary mb-1">
                           {step.title}
                         </h4>
                         <p className="text-sm text-on-surface-variant">
@@ -246,10 +210,10 @@ export default function Home() {
                   support_agent
                 </span>
                 <h4 className="text-xl font-semibold text-primary">
-                  Professionele begeleiding
+                  Begeleiding op aanvraag
                 </h4>
                 <p className="text-base text-on-surface-variant">
-                  Altijd een getrainde host aanwezig om gasten te assisteren.
+                  Desgewenst een host aanwezig om je gasten op weg te helpen.
                 </p>
               </div>
               <div className="bg-surface p-8 rounded-2xl border border-border-subtle flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow sm:col-span-2">
@@ -270,45 +234,7 @@ export default function Home() {
         </section>
 
         {/* SFEERIMPRESSIE */}
-        <section
-          id="gallery"
-          className="py-24 md:py-32 px-5 md:px-8 max-w-[1280px] mx-auto"
-        >
-          <div className="mb-12 text-center">
-            <h2 className="text-[28px] md:text-[32px] font-semibold tracking-tight text-primary mb-4">
-              Sfeerimpressie
-            </h2>
-            <p className="text-base text-on-surface-variant max-w-xl mx-auto">
-              Beleef de magie van een Flashframe photobooth op jouw evenement.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {gallery.map((item) => (
-              <div
-                key={item.src}
-                className="image-card aspect-[3/4] bg-surface-container relative shadow-sm"
-              >
-                {item.type === "video" ? (
-                  <video
-                    src={item.src}
-                    aria-label={item.alt}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover rounded-lg"
-                  />
-                ) : (
-                  <Photo
-                    src={item.src}
-                    alt={item.alt}
-                    className="absolute inset-0 w-full h-full object-cover rounded-lg"
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
+        <ExampleCarousel />
 
         {/* PAKKETTEN & PRIJZEN */}
         <Pricing />
@@ -342,7 +268,8 @@ export default function Home() {
           <div className="flex flex-col gap-4">
             <span className="text-lg font-bold text-primary">Flashframe</span>
             <p className="text-base text-on-surface-variant opacity-60">
-              Premium photobooth-ervaringen voor onvergetelijke evenementen.
+              Photobooth-verhuur voor bruiloften, bedrijfsfeesten en
+              evenementen.
             </p>
           </div>
           <div className="flex flex-col gap-4">
@@ -428,8 +355,8 @@ export default function Home() {
         </div>
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 mt-12 pt-8 border-t border-border-subtle flex flex-col md:flex-row md:justify-between gap-2">
           <p className="text-sm text-on-surface-variant opacity-60">
-            © {new Date().getFullYear()} {COMPANY_NAME}. Premium Photobooth
-            Rentals.
+            © {new Date().getFullYear()} {COMPANY_NAME}. Alle rechten
+            voorbehouden.
           </p>
           <p className="text-sm text-on-surface-variant opacity-60">
             KvK {KVK} · BTW {BTW}
