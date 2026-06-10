@@ -73,7 +73,10 @@ export default function ExampleCarousel() {
   return (
     <section id="gallery" className="py-24 md:py-32">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8">
-        <div className="mb-10 md:mb-14 flex items-end justify-between gap-6">
+        <div
+          data-reveal
+          className="mb-10 md:mb-14 flex items-end justify-between gap-6"
+        >
           <div className="flex flex-col gap-4">
             <h2 className="text-[28px] md:text-[32px] font-semibold tracking-tight text-primary">
               Sfeerimpressie

@@ -14,7 +14,7 @@ export default function Pricing() {
       id="pricing"
       className="py-24 md:py-32 px-5 md:px-8 max-w-[1280px] mx-auto"
     >
-      <div className="mx-auto max-w-2xl text-center mb-12 md:mb-16">
+      <div data-reveal className="mx-auto max-w-2xl text-center mb-12 md:mb-16">
         <h2 className="text-[28px] md:text-[32px] font-semibold tracking-tight text-primary mb-4">
           Prijzen
         </h2>
@@ -25,6 +25,7 @@ export default function Pricing() {
       </div>
 
       <div
+        data-reveal-group
         className={
           single ? "max-w-md mx-auto" : "grid gap-6 md:grid-cols-3"
         }

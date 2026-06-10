@@ -4,6 +4,7 @@ import BookingForm from "./components/BookingForm";
 import Pricing from "./components/Pricing";
 import ExampleCarousel from "./components/ExampleCarousel";
 import StickyCta from "./components/StickyCta";
+import PageAnimations from "./components/PageAnimations";
 import {
   INSTAGRAM_URL,
   INSTAGRAM_HANDLE,
@@ -68,19 +69,28 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <Navbar />
+      <PageAnimations>
       <main id="top" className="pt-[80px]">
         {/* HERO — full-bleed: de foto loopt door tot de schermranden */}
-        <section className="min-h-[80svh] flex items-center justify-center px-5 md:px-8 py-24 md:py-32 relative overflow-hidden">
-          <Image
-            src="/images/sfeer-1.jpg"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="z-0 object-cover"
-          />
+        <section
+          data-hero-section
+          className="min-h-[80svh] flex items-center justify-center px-5 md:px-8 py-24 md:py-32 relative overflow-hidden"
+        >
+          <div data-hero-image className="absolute inset-0 z-0">
+            <Image
+              src="/images/sfeer-1.jpg"
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+            />
+          </div>
           <div className="absolute inset-0 z-0 bg-gradient-to-b from-surface/70 via-surface/65 to-surface" />
-          <div className="relative z-10 text-center max-w-4xl mx-auto flex flex-col items-center gap-8">
+          <div
+            data-hero
+            className="relative z-10 text-center max-w-4xl mx-auto flex flex-col items-center gap-8"
+          >
             <h1 className="text-[40px] sm:text-[48px] md:text-[72px] text-primary leading-[1.1] tracking-[-0.03em] md:tracking-[-0.04em] font-semibold">
               Leg elk moment <br />
               vast in stijl.
@@ -117,7 +127,7 @@ export default function Home() {
         >
           {/* Productfoto volgt nog van de eigenaar; tot die tijd tekst + kenmerken. */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-            <div>
+            <div data-reveal>
               <h2 className="text-[28px] md:text-[32px] font-semibold tracking-tight text-primary mb-4">
                 De fotobooth
               </h2>
@@ -131,7 +141,7 @@ export default function Home() {
                 Boek de fotobooth
               </a>
             </div>
-            <ul className="bg-surface-faint rounded-2xl p-8 md:p-10 flex flex-col gap-4">
+            <ul data-reveal className="bg-surface-faint rounded-2xl p-8 md:p-10 flex flex-col gap-4">
               {booth.features.map((f) => (
                 <li
                   key={f}
@@ -153,7 +163,7 @@ export default function Home() {
           className="py-16 md:py-24 px-5 md:px-8 max-w-[1280px] mx-auto bg-surface-faint rounded-3xl my-16"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-8 md:p-16">
-            <div className="lg:col-span-4 flex flex-col gap-6">
+            <div data-reveal className="lg:col-span-4 flex flex-col gap-6">
               <h2 className="text-[28px] md:text-[32px] font-semibold tracking-tight text-primary">
                 Waarom Flashframe?
               </h2>
@@ -184,7 +194,10 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div
+              data-reveal-group
+              className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4"
+            >
               {whyCards.map((card, i) => (
                 <div
                   key={card.title}
@@ -216,7 +229,7 @@ export default function Home() {
           className="py-24 md:py-32 px-5 md:px-8 max-w-[1280px] mx-auto border-t border-border-subtle"
         >
           <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
+            <div data-reveal className="text-center mb-12">
               <h2 className="text-[28px] md:text-[32px] font-semibold tracking-tight text-primary mb-4">
                 Neem contact op
               </h2>
@@ -241,7 +254,9 @@ export default function Home() {
                 ))}
               </ol>
             </div>
-            <BookingForm />
+            <div data-reveal>
+              <BookingForm />
+            </div>
           </div>
         </section>
       </main>
@@ -355,6 +370,7 @@ export default function Home() {
           </p>
         </div>
       </footer>
+      </PageAnimations>
 
       <StickyCta />
     </>
