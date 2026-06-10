@@ -69,8 +69,8 @@ export default function Home() {
       />
       <Navbar />
       <main id="top" className="pt-[80px]">
-        {/* HERO */}
-        <section className="min-h-[80svh] flex items-center justify-center px-5 md:px-8 py-24 md:py-32 max-w-[1280px] mx-auto relative overflow-hidden">
+        {/* HERO — full-bleed: de foto loopt door tot de schermranden */}
+        <section className="min-h-[80svh] flex items-center justify-center px-5 md:px-8 py-24 md:py-32 relative overflow-hidden">
           <Image
             src="/images/sfeer-1.jpg"
             alt=""
@@ -115,15 +115,23 @@ export default function Home() {
           id="products"
           className="py-24 md:py-32 px-5 md:px-8 max-w-[1280px] mx-auto"
         >
-          {/* Productfoto volgt nog van de eigenaar; tot die tijd alleen tekst. */}
-          <div className="max-w-3xl">
-            <h2 className="text-[28px] md:text-[32px] font-semibold tracking-tight text-primary mb-4">
-              De fotobooth
-            </h2>
-            <p className="text-base text-on-surface-variant mb-8">
-              {booth.description}
-            </p>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {/* Productfoto volgt nog van de eigenaar; tot die tijd tekst + kenmerken. */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+            <div>
+              <h2 className="text-[28px] md:text-[32px] font-semibold tracking-tight text-primary mb-4">
+                De fotobooth
+              </h2>
+              <p className="text-base text-on-surface-variant mb-8">
+                {booth.description}
+              </p>
+              <a
+                href="#booking"
+                className="btn-accent inline-flex px-8 py-3 rounded-full text-xs font-semibold tracking-wider uppercase"
+              >
+                Boek de fotobooth
+              </a>
+            </div>
+            <ul className="bg-surface-faint rounded-2xl p-8 md:p-10 flex flex-col gap-4">
               {booth.features.map((f) => (
                 <li
                   key={f}
@@ -136,12 +144,6 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            <a
-              href="#booking"
-              className="btn-accent mt-10 inline-flex px-8 py-3 rounded-full text-xs font-semibold tracking-wider uppercase"
-            >
-              Boek de fotobooth
-            </a>
           </div>
         </section>
 
