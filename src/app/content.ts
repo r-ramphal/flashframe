@@ -8,12 +8,12 @@ export type Booth = {
   description: string;
   image: string;
   alt: string;
-  features: { icon: string; label: string }[];
+  features: string[];
 };
 
 export type Step = { n: string; title: string; desc: string };
 
-export type WhyCard = { icon: string; title: string; desc: string };
+export type WhyCard = { title: string; desc: string };
 
 export type GalleryItem = {
   id: string;
@@ -36,23 +36,25 @@ export const hero = {
   titleTop: "Leg elk moment",
   titleBottom: "vast in stijl.",
   subtitle:
-    "Premium photobooths voor bruiloften, bedrijfsfeesten en evenementen. Wij regelen alles, jij geniet van het moment.",
+    "Een professionele photobooth met directe prints voor bruiloften, bedrijfsfeesten en andere evenementen. Wij regelen alles, jij geniet van het moment.",
   primaryCta: { label: "Boek nu", href: "#booking" },
-  secondaryCta: { label: "Bekijk booths", href: "#products" },
+  secondaryCta: { label: "Bekijk de fotobooth", href: "#products" },
 };
 
 export const booths: Booth[] = [
   {
     title: "Fotobooth met directe print",
     description:
-      "Hoogwaardige kwaliteit in seconden. Creëer tastbare herinneringen met professionele belichting en directe fysieke prints voor je gasten.",
+      "Je gasten maken zelf foto's via het touchscreen en houden binnen enkele seconden een geprinte fotostrip in handen. Het startscherm wordt vooraf aangepast aan jouw feest, en props liggen klaar voor wie durft.",
+    // De echte productfoto wordt nog aangeleverd door de eigenaar; tot die tijd
+    // wordt er geen afbeelding getoond in de product-sectie (zie page.tsx).
     image: "/images/fotobooth.jpg",
     alt: "Fotobooth met directe print",
     features: [
-      { icon: "print", label: "Onbeperkte fysieke prints" },
-      { icon: "lightbulb", label: "Studio-kwaliteit ringlamp" },
-      { icon: "tv_options_edit_channels", label: "Gepersonaliseerd startscherm" },
-      { icon: "celebration", label: "Props inbegrepen" },
+      "Onbeperkte fysieke prints",
+      "Studio-kwaliteit ringlamp",
+      "Gepersonaliseerd startscherm",
+      "Props inbegrepen",
     ],
   },
 ];
@@ -60,36 +62,33 @@ export const booths: Booth[] = [
 export const steps: Step[] = [
   {
     n: "1",
-    title: "Kies je booth",
-    desc: "Selecteer de booth die perfect bij jouw visie past.",
+    title: "Vraag je datum aan",
+    desc: "Vul het formulier in en je hoort binnen 24 uur of je datum nog vrij is.",
   },
   {
     n: "2",
-    title: "Wij regelen de setup",
-    desc: "Ons team arriveert ruim op tijd voor een vlekkeloze installatie.",
+    title: "Wij bouwen alles op",
+    desc: "Op de dag zelf staan we ruim op tijd klaar, inclusief props en startscherm.",
   },
   {
     n: "3",
-    title: "Maak onvergetelijke herinneringen",
-    desc: "Geniet van het moment, wij zorgen voor de rest.",
+    title: "Jij geniet van je feest",
+    desc: "Gasten printen onbeperkt. Na afloop bouwen wij alles weer af.",
   },
 ];
 
 export const whyCards: WhyCard[] = [
   {
-    icon: "verified",
-    title: "Zorgeloze ervaring",
-    desc: "Van begin tot eind geregeld. Geen technische stress tijdens je evenement.",
+    title: "Persoonlijk contact",
+    desc: "Flashframe is een klein bedrijf uit Assendelft. Je schakelt rechtstreeks met ons, ook via WhatsApp, zonder tussenpersonen.",
   },
   {
-    icon: "support_agent",
-    title: "Begeleiding op aanvraag",
-    desc: "Desgewenst een host aanwezig om je gasten op weg te helpen.",
+    title: "Professionele kwaliteit",
+    desc: "We fotograferen met een professionele DSLR-camera en studio-belichting, en printen op premium fotopapier. Digitale foto's leveren we in hoge resolutie.",
   },
   {
-    icon: "high_quality",
-    title: "Hoogwaardige kwaliteit",
-    desc: "Wij gebruiken uitsluitend professionele DSLR-camera's en studio-belichting voor het beste resultaat, afgedrukt op premium fotopapier of in hoge resolutie digitaal geleverd.",
+    title: "Alles inbegrepen",
+    desc: "Op- en afbouw, props en een gepersonaliseerd startscherm zitten bij elk pakket. Je hebt er geen omkijken naar.",
   },
 ];
 

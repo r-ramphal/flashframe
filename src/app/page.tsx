@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Navbar from "./components/Navbar";
 import BookingForm from "./components/BookingForm";
-import Photo from "./components/Photo";
 import Pricing from "./components/Pricing";
 import ExampleCarousel from "./components/ExampleCarousel";
 import StickyCta from "./components/StickyCta";
@@ -87,15 +86,16 @@ export default function Home() {
               vast in stijl.
             </h1>
             <p className="text-lg leading-relaxed text-on-surface-variant max-w-2xl">
-              Premium photobooths voor bruiloften, bedrijfsfeesten en
-              evenementen. Wij regelen alles, jij geniet van het moment.
+              Een professionele photobooth met directe prints voor bruiloften,
+              bedrijfsfeesten en andere evenementen. Wij regelen alles, jij
+              geniet van het moment.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto">
               <a
                 href="#products"
                 className="btn-outline px-8 py-3 rounded-full text-xs font-semibold tracking-wider uppercase text-center w-full sm:w-auto"
               >
-                Bekijk booths
+                Bekijk de fotobooth
               </a>
               <a
                 href="#booking"
@@ -115,53 +115,33 @@ export default function Home() {
           id="products"
           className="py-24 md:py-32 px-5 md:px-8 max-w-[1280px] mx-auto"
         >
-          <div className="mb-12 md:mb-16 text-center md:text-left">
+          {/* Productfoto volgt nog van de eigenaar; tot die tijd alleen tekst. */}
+          <div className="max-w-3xl">
             <h2 className="text-[28px] md:text-[32px] font-semibold tracking-tight text-primary mb-4">
               De fotobooth
             </h2>
-            <p className="text-base text-on-surface-variant max-w-xl">
-              Eén booth, alles erop en eraan: directe fysieke prints, een
-              gepersonaliseerd startscherm en props voor je gasten.
+            <p className="text-base text-on-surface-variant mb-8">
+              {booth.description}
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
-            <div className="image-card aspect-[4/5] bg-surface-container relative">
-              <Photo
-                src={booth.image}
-                alt={booth.alt}
-                label={booth.title}
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-            <div>
-              <h3 className="text-2xl font-semibold text-primary mb-3">
-                {booth.title}
-              </h3>
-              <p className="text-base text-on-surface-variant mb-6">
-                {booth.description}
-              </p>
-              <ul className="flex flex-col gap-3">
-                {booth.features.map((f) => (
-                  <li
-                    key={f.label}
-                    className="flex items-center gap-3 text-base text-on-surface"
-                  >
-                    <span className="material-symbols-outlined text-[20px] text-secondary">
-                      {f.icon}
-                    </span>
-                    {f.label}
-                  </li>
-                ))}
-              </ul>
-              <a
-                href="#booking"
-                className="btn-accent mt-8 inline-flex px-8 py-3 rounded-full text-xs font-semibold tracking-wider uppercase"
-              >
-                Boek de fotobooth
-              </a>
-            </div>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {booth.features.map((f) => (
+                <li
+                  key={f}
+                  className="flex items-center gap-3 text-base text-on-surface"
+                >
+                  <span className="material-symbols-outlined text-[18px] text-secondary">
+                    check
+                  </span>
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <a
+              href="#booking"
+              className="btn-accent mt-10 inline-flex px-8 py-3 rounded-full text-xs font-semibold tracking-wider uppercase"
+            >
+              Boek de fotobooth
+            </a>
           </div>
         </section>
 
@@ -176,8 +156,7 @@ export default function Home() {
                 Waarom Flashframe?
               </h2>
               <p className="text-base text-on-surface-variant">
-                Een moeiteloze ervaring van boeking tot afbouw. Wij streven naar
-                perfectie op elk evenement.
+                Van aanvraag tot afbouw heb je één aanspreekpunt. Zo werkt het:
               </p>
               <div className="flex flex-col gap-4 mt-4">
                 {steps.map((step, i) => (
@@ -207,13 +186,10 @@ export default function Home() {
               {whyCards.map((card, i) => (
                 <div
                   key={card.title}
-                  className={`bg-surface p-8 rounded-2xl border border-border-subtle flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow ${
+                  className={`bg-surface p-8 rounded-2xl border border-border-subtle flex flex-col gap-3 shadow-sm ${
                     i === whyCards.length - 1 ? "sm:col-span-2" : ""
                   }`}
                 >
-                  <span className="material-symbols-outlined text-[32px] text-secondary">
-                    {card.icon}
-                  </span>
                   <h4 className="text-xl font-semibold text-primary">
                     {card.title}
                   </h4>
@@ -279,7 +255,7 @@ export default function Home() {
                 href="#products"
                 className="text-base text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity"
               >
-                Producten
+                De fotobooth
               </a>
               <a
                 href="#pricing"

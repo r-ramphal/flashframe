@@ -5,7 +5,7 @@ import WhatsAppButton from "./WhatsAppButton";
 import { INSTAGRAM_URL } from "../site";
 
 const links = [
-  { label: "Producten", href: "#products" },
+  { label: "De fotobooth", href: "#products" },
   { label: "Prijzen", href: "#pricing" },
   { label: "Hoe het werkt", href: "#how-it-works" },
   { label: "Contact", href: "#booking" },
