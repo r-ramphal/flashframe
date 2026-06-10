@@ -5,6 +5,7 @@ import Pricing from "./components/Pricing";
 import ExampleCarousel from "./components/ExampleCarousel";
 import StickyCta from "./components/StickyCta";
 import PageAnimations from "./components/PageAnimations";
+import Icon from "./components/Icon";
 import {
   INSTAGRAM_URL,
   INSTAGRAM_HANDLE,
@@ -82,15 +83,13 @@ export default function Home() {
               alt=""
               fill
               priority
+              quality={60}
               sizes="100vw"
               className="object-cover"
             />
           </div>
           <div className="absolute inset-0 z-0 bg-gradient-to-b from-surface/70 via-surface/65 to-surface" />
-          <div
-            data-hero
-            className="relative z-10 text-center max-w-4xl mx-auto flex flex-col items-center gap-8"
-          >
+          <div className="hero-enter relative z-10 text-center max-w-4xl mx-auto flex flex-col items-center gap-8">
             <h1 className="text-[40px] sm:text-[48px] md:text-[72px] text-primary leading-[1.1] tracking-[-0.03em] md:tracking-[-0.04em] font-semibold">
               Leg elk moment <br />
               vast in stijl.
@@ -147,9 +146,10 @@ export default function Home() {
                   key={f}
                   className="flex items-center gap-3 text-base text-on-surface"
                 >
-                  <span className="material-symbols-outlined text-[18px] text-secondary">
-                    check
-                  </span>
+                  <Icon
+                    name="check"
+                    className="w-[18px] h-[18px] text-secondary shrink-0"
+                  />
                   {f}
                 </li>
               ))}

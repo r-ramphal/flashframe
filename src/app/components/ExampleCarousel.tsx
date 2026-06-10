@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Photo from "./Photo";
+import Icon from "./Icon";
 import { galleryItems as items } from "../content";
 
 // Laadt de video pas zodra hij (bijna) in beeld komt, zodat mobiele bezoekers
@@ -94,9 +95,7 @@ export default function ExampleCarousel() {
               aria-label="Vorige"
               className="w-11 h-11 rounded-full border border-border-subtle flex items-center justify-center text-primary transition-colors hover:bg-surface-faint disabled:opacity-30 disabled:hover:bg-transparent"
             >
-              <span className="material-symbols-outlined text-[20px]">
-                arrow_back
-              </span>
+              <Icon name="arrow-back" className="w-5 h-5" />
             </button>
             <button
               type="button"
@@ -105,9 +104,7 @@ export default function ExampleCarousel() {
               aria-label="Volgende"
               className="w-11 h-11 rounded-full border border-border-subtle flex items-center justify-center text-primary transition-colors hover:bg-surface-faint disabled:opacity-30 disabled:hover:bg-transparent"
             >
-              <span className="material-symbols-outlined text-[20px]">
-                arrow_forward
-              </span>
+              <Icon name="arrow-forward" className="w-5 h-5" />
             </button>
           </div>
         </div>

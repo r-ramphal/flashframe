@@ -5,6 +5,7 @@ import {
   travelCostNote,
 } from "../content";
 import PlanCta from "./PlanCta";
+import Icon from "./Icon";
 
 export default function Pricing() {
   const single = plans.length === 1;
@@ -72,9 +73,10 @@ export default function Pricing() {
                   key={item}
                   className="flex items-center gap-2 text-base text-on-surface"
                 >
-                  <span className="material-symbols-outlined text-secondary text-[18px]">
-                    check
-                  </span>
+                  <Icon
+                    name="check"
+                    className="w-[18px] h-[18px] text-secondary shrink-0"
+                  />
                   {item}
                 </li>
               ))}
@@ -85,9 +87,10 @@ export default function Pricing() {
 
       <div className="mt-10 flex flex-col items-center gap-3">
         <p className="flex items-center gap-2 rounded-full bg-surface-faint px-4 py-2 text-sm font-medium text-on-surface">
-          <span className="material-symbols-outlined text-[18px] text-secondary">
-            schedule
-          </span>
+          <Icon
+            name="clock"
+            className="w-[18px] h-[18px] text-secondary shrink-0"
+          />
           {extraHoursNote}
         </p>
         <p className="text-center text-sm text-text-muted max-w-xl">

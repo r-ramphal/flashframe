@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Icon from "./Icon";
 
 type Props = {
   src: string;
@@ -31,9 +32,7 @@ export default function Photo({
   if (error) {
     return (
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-surface-container text-center px-4">
-        <span className="material-symbols-outlined text-text-muted text-4xl">
-          add_photo_alternate
-        </span>
+        <Icon name="add-photo" className="w-10 h-10 text-text-muted" />
         <span className="text-sm text-on-surface-variant">
           {label ?? alt}
         </span>

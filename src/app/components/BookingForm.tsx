@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { whatsappUrl } from "../site";
 import { pricingPlans } from "../content";
+import Icon from "./Icon";
 
 const fieldClass =
   "input-field w-full px-4 py-3 text-base text-primary placeholder:text-text-muted";
@@ -90,9 +91,10 @@ export default function BookingForm() {
   if (submitted) {
     return (
       <div className="bg-surface-bright p-8 md:p-12 rounded-2xl border border-border-subtle shadow-sm text-center">
-        <span className="material-symbols-outlined text-secondary text-5xl mb-4">
-          check_circle
-        </span>
+        <Icon
+          name="check-circle"
+          className="w-12 h-12 text-secondary mx-auto mb-4"
+        />
         <h3 className="text-2xl font-semibold text-primary mb-2">
           Aanvraag ontvangen!
         </h3>

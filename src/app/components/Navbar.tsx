@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import WhatsAppButton from "./WhatsAppButton";
+import Icon from "./Icon";
 import { INSTAGRAM_URL } from "../site";
 
 const links = [
@@ -78,9 +79,7 @@ export default function Navbar() {
             onClick={() => setOpen(!open)}
             className="md:hidden text-primary flex items-center"
           >
-            <span className="material-symbols-outlined">
-              {open ? "close" : "menu"}
-            </span>
+            <Icon name={open ? "close" : "menu"} className="w-6 h-6" />
           </button>
         </div>
       </div>
