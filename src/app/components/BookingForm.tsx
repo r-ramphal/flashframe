@@ -11,6 +11,14 @@ const labelClass =
 const groupTitleClass =
   "text-sm font-semibold tracking-wider uppercase text-secondary";
 
+// Sterretje achter het label van een verplicht veld.
+const Req = () => (
+  <span className="text-error" aria-hidden>
+    {" "}
+    *
+  </span>
+);
+
 // Naam van het event waarmee de pakketknoppen bij "Prijzen" dit formulier
 // voorinvullen (zie PlanCta.tsx).
 export const SELECT_PLAN_EVENT = "flashframe:select-plan";
@@ -99,11 +107,17 @@ export default function BookingForm() {
 
       {/* Stap 1: contactgegevens */}
       <div className="space-y-5">
-        <p className={groupTitleClass}>1 · Jouw gegevens</p>
+        <div className="flex items-baseline justify-between gap-4">
+          <p className={groupTitleClass}>1 · Jouw gegevens</p>
+          <p className="text-xs text-text-muted">
+            <span className="text-error">*</span> = verplicht
+          </p>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div className="sm:col-span-2">
             <label className={labelClass} htmlFor="name">
               Naam
+              <Req />
             </label>
             <input
               id="name"
@@ -118,6 +132,7 @@ export default function BookingForm() {
           <div>
             <label className={labelClass} htmlFor="email">
               E-mailadres
+              <Req />
             </label>
             <input
               id="email"
@@ -132,6 +147,7 @@ export default function BookingForm() {
           <div>
             <label className={labelClass} htmlFor="phone">
               Telefoonnummer
+              <Req />
             </label>
             <input
               id="phone"
@@ -153,6 +169,7 @@ export default function BookingForm() {
           <div>
             <label className={labelClass} htmlFor="date">
               Datum evenement
+              <Req />
             </label>
             <input
               id="date"
@@ -166,6 +183,7 @@ export default function BookingForm() {
           <div>
             <label className={labelClass} htmlFor="event-type">
               Type evenement
+              <Req />
             </label>
             <select
               id="event-type"
@@ -187,7 +205,10 @@ export default function BookingForm() {
           </div>
           <div className="sm:col-span-2">
             <label className={labelClass} htmlFor="package">
-              Pakket
+              Pakket{" "}
+              <span className="normal-case font-normal text-text-muted">
+                (optioneel)
+              </span>
             </label>
             <select
               id="package"
@@ -233,6 +254,7 @@ export default function BookingForm() {
           <span>
             Ik ga ermee akkoord dat mijn gegevens worden gebruikt om mijn
             aanvraag te behandelen.
+            <Req />
           </span>
         </label>
 

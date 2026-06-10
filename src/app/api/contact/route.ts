@@ -11,14 +11,6 @@ import { Resend } from "resend";
 import { EMAIL } from "../../site";
 
 export async function POST(request: Request) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    return Response.json(
-      { success: false, error: "E-mailservice is nog niet geconfigureerd." },
-      { status: 500 }
-    );
-  }
-
   let data: Record<string, string>;
   try {
     data = await request.json();
@@ -34,12 +26,45 @@ export async function POST(request: Request) {
     return Response.json({ success: true });
   }
 
-  const { naam, email, telefoon, datum, evenement, pakket, opmerkingen } = data;
+  // Zelfde verplichte velden als in het formulier (BookingForm.tsx); de
+  // browser-`required` is te omzeilen, dus hier nogmaals controleren.
+  const veld = (naam: string) =>
+    typeof data[naam] === "string" ? data[naam].trim() : "";
 
-  if (!naam || !email || !telefoon || !datum) {
+  const naam = veld("naam");
+  const email = veld("email");
+  const telefoon = veld("telefoon");
+  const datum = veld("datum");
+  const evenement = veld("evenement");
+  const pakket = veld("pakket");
+  const opmerkingen = veld("opmerkingen");
+
+  if (!naam || !email || !telefoon || !datum || !evenement) {
     return Response.json(
-      { success: false, error: "Vul de verplichte velden in." },
+      { success: false, error: "Vul alle verplichte velden in." },
       { status: 400 }
+    );
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return Response.json(
+      { success: false, error: "Vul een geldig e-mailadres in." },
+      { status: 400 }
+    );
+  }
+
+  if (Number.isNaN(Date.parse(datum))) {
+    return Response.json(
+      { success: false, error: "Vul een geldige datum in." },
+      { status: 400 }
+    );
+  }
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    return Response.json(
+      { success: false, error: "E-mailservice is nog niet geconfigureerd." },
+      { status: 500 }
     );
   }
 
