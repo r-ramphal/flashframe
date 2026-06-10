@@ -7,8 +7,17 @@ import Icon from "./Icon";
 import { galleryItems as items } from "../content";
 
 // Laadt de video pas zodra hij (bijna) in beeld komt, zodat mobiele bezoekers
-// niet meteen alle video's hoeven te downloaden.
-function LazyVideo({ src, title }: { src: string; title: string }) {
+// niet meteen alle video's hoeven te downloaden. De poster (eerste frame) is
+// wél direct zichtbaar, zodat de kaart nooit leeg oogt.
+function LazyVideo({
+  src,
+  title,
+  poster,
+}: {
+  src: string;
+  title: string;
+  poster?: string;
+}) {
   const ref = useRef<HTMLVideoElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -36,6 +45,7 @@ function LazyVideo({ src, title }: { src: string; title: string }) {
     <video
       ref={ref}
       src={visible ? src : undefined}
+      poster={poster}
       aria-label={title}
       muted
       loop
@@ -118,7 +128,11 @@ export default function ExampleCarousel() {
               >
                 <div className="image-card group relative aspect-[4/5] bg-surface-container overflow-hidden rounded-xl">
                   {item.type === "video" ? (
-                    <LazyVideo src={item.src} title={item.title} />
+                    <LazyVideo
+                      src={item.src}
+                      title={item.title}
+                      poster={item.poster}
+                    />
                   ) : (
                     <Photo
                       src={item.src}

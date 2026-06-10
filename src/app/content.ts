@@ -21,6 +21,9 @@ export type GalleryItem = {
   description: string;
   type: "image" | "video";
   src: string;
+  // Alleen voor video's: stilstaand eerste frame dat direct zichtbaar is
+  // terwijl de video zelf nog (lazy) laadt.
+  poster?: string;
 };
 
 export type PricingPlan = {
@@ -106,6 +109,7 @@ export const galleryItems: GalleryItem[] = [
     description: "Maskers, hoeden en accessoires zorgen voor spontane reacties.",
     type: "video",
     src: "/videos/sfeer-1.mp4",
+    poster: "/videos/sfeer-1-poster.jpg",
   },
   {
     id: "print",
@@ -121,6 +125,7 @@ export const galleryItems: GalleryItem[] = [
     description: "De booth als middelpunt van het feest.",
     type: "video",
     src: "/videos/sfeer-2.mp4",
+    poster: "/videos/sfeer-2-poster.jpg",
   },
   {
     id: "herinnering",
