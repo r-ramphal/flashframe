@@ -19,6 +19,19 @@ const Req = () => (
   </span>
 );
 
+const Optional = () => (
+  <span className="normal-case font-normal text-text-muted"> (optioneel)</span>
+);
+
+const eventTypes = [
+  "Bruiloft",
+  "Bedrijfsfeest",
+  "Verjaardag",
+  "Babyshower",
+  "Afstudeerfeest",
+  "Overig",
+];
+
 // Naam van het event waarmee de pakketknoppen bij "Prijzen" dit formulier
 // voorinvullen (zie PlanCta.tsx).
 export const SELECT_PLAN_EVENT = "flashframe:select-plan";
@@ -147,13 +160,12 @@ export default function BookingForm() {
           <div>
             <label className={labelClass} htmlFor="phone">
               Telefoonnummer
-              <Req />
+              <Optional />
             </label>
             <input
               id="phone"
               name="telefoon"
               type="tel"
-              required
               autoComplete="tel"
               placeholder="+31 6 12345678"
               className={fieldClass}
@@ -181,34 +193,9 @@ export default function BookingForm() {
             />
           </div>
           <div>
-            <label className={labelClass} htmlFor="event-type">
-              Type evenement
-              <Req />
-            </label>
-            <select
-              id="event-type"
-              name="evenement"
-              required
-              defaultValue=""
-              className={`${fieldClass} pr-10 cursor-pointer`}
-            >
-              <option disabled value="">
-                Kies een optie
-              </option>
-              <option value="Bruiloft">Bruiloft</option>
-              <option value="Bedrijfsfeest">Bedrijfsfeest</option>
-              <option value="Verjaardag">Verjaardag</option>
-              <option value="Babyshower">Babyshower</option>
-              <option value="Afstudeerfeest">Afstudeerfeest</option>
-              <option value="Overig">Overig</option>
-            </select>
-          </div>
-          <div className="sm:col-span-2">
             <label className={labelClass} htmlFor="package">
-              Pakket{" "}
-              <span className="normal-case font-normal text-text-muted">
-                (optioneel)
-              </span>
+              Pakket
+              <Optional />
             </label>
             <select
               id="package"
@@ -225,12 +212,31 @@ export default function BookingForm() {
               ))}
             </select>
           </div>
+          <fieldset className="sm:col-span-2">
+            <legend className={labelClass}>
+              Type evenement
+              <Optional />
+            </legend>
+            <div className="flex flex-wrap gap-2">
+              {eventTypes.map((t) => (
+                <label key={t} className="cursor-pointer">
+                  <input
+                    type="radio"
+                    name="evenement"
+                    value={t}
+                    className="peer sr-only"
+                  />
+                  <span className="inline-flex px-4 py-2 rounded-full border border-border-subtle bg-surface-faint text-sm text-on-surface transition-colors hover:border-secondary/50 peer-checked:bg-secondary peer-checked:border-secondary peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-secondary/40">
+                    {t}
+                  </span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
           <div className="sm:col-span-2">
             <label className={labelClass} htmlFor="comments">
-              Opmerkingen of wensen{" "}
-              <span className="normal-case font-normal text-text-muted">
-                (optioneel)
-              </span>
+              Opmerkingen of wensen
+              <Optional />
             </label>
             <textarea
               id="comments"
@@ -244,20 +250,6 @@ export default function BookingForm() {
       </div>
 
       <div className="space-y-6">
-        <label className="flex items-start gap-3 text-sm text-on-surface-variant">
-          <input
-            type="checkbox"
-            name="privacy_akkoord"
-            required
-            className="mt-1 h-4 w-4 accent-secondary flex-shrink-0"
-          />
-          <span>
-            Ik ga ermee akkoord dat mijn gegevens worden gebruikt om mijn
-            aanvraag te behandelen.
-            <Req />
-          </span>
-        </label>
-
         {error && (
           <p className="text-sm text-error font-medium" role="alert">
             {error}
@@ -284,6 +276,10 @@ export default function BookingForm() {
             </a>
           </span>
         </div>
+        <p className="text-xs text-text-muted text-center sm:text-left">
+          Door te versturen ga je ermee akkoord dat we je gegevens gebruiken om
+          je aanvraag te behandelen.
+        </p>
       </div>
     </form>
   );

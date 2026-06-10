@@ -219,9 +219,25 @@ export default function Home() {
                 Neem contact op
               </h2>
               <p className="text-base text-on-surface-variant">
-                Vul het formulier in en we nemen binnen 24 uur contact met je op
-                met een voorstel op maat.
+                Een aanvraag is geheel vrijblijvend. Zo werkt het:
               </p>
+              <ol className="mt-6 flex flex-col sm:flex-row justify-center gap-3 sm:gap-8 text-sm text-on-surface-variant">
+                {[
+                  "Wij checken je datum",
+                  "Binnen 24 uur een voorstel",
+                  "Pas definitief als jij bevestigt",
+                ].map((stap, i) => (
+                  <li
+                    key={stap}
+                    className="flex items-center justify-center sm:justify-start gap-3"
+                  >
+                    <span className="bg-primary text-on-primary w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold shrink-0">
+                      {i + 1}
+                    </span>
+                    {stap}
+                  </li>
+                ))}
+              </ol>
             </div>
             <BookingForm />
           </div>

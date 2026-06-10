@@ -39,7 +39,7 @@ export async function POST(request: Request) {
   const pakket = veld("pakket");
   const opmerkingen = veld("opmerkingen");
 
-  if (!naam || !email || !telefoon || !datum || !evenement) {
+  if (!naam || !email || !datum) {
     return Response.json(
       { success: false, error: "Vul alle verplichte velden in." },
       { status: 400 }
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
   const lines = [
     ["Naam", naam],
     ["E-mail", email],
-    ["Telefoon", telefoon],
+    ["Telefoon", telefoon || "—"],
     ["Datum evenement", datum],
     ["Type evenement", evenement || "—"],
     ["Pakket", pakket || "Geen voorkeur"],
