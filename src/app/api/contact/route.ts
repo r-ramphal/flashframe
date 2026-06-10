@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     return Response.json({ success: true });
   }
 
-  const { naam, email, telefoon, datum, evenement, opmerkingen } = data;
+  const { naam, email, telefoon, datum, evenement, pakket, opmerkingen } = data;
 
   if (!naam || !email || !telefoon || !datum) {
     return Response.json(
@@ -52,6 +52,7 @@ export async function POST(request: Request) {
     ["Telefoon", telefoon],
     ["Datum evenement", datum],
     ["Type evenement", evenement || "—"],
+    ["Pakket", pakket || "Geen voorkeur"],
     ["Opmerkingen", opmerkingen || "—"],
   ];
 

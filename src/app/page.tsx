@@ -1,8 +1,10 @@
+import Image from "next/image";
 import Navbar from "./components/Navbar";
 import BookingForm from "./components/BookingForm";
 import Photo from "./components/Photo";
 import Pricing from "./components/Pricing";
 import ExampleCarousel from "./components/ExampleCarousel";
+import StickyCta from "./components/StickyCta";
 import {
   INSTAGRAM_URL,
   INSTAGRAM_HANDLE,
@@ -11,11 +13,45 @@ import {
   PHONE_TEL,
   COMPANY_NAME,
   ADDRESS_STREET,
+  ADDRESS_POSTAL_CODE,
+  ADDRESS_LOCALITY,
   ADDRESS_CITY,
   KVK,
   BTW,
+  SITE_URL,
 } from "./site";
-import { booths, steps, whyCards } from "./content";
+import { booths, steps, whyCards, pricingPlans } from "./content";
+
+// Structured data (schema.org LocalBusiness) zodat Google het bedrijf,
+// de regio en de pakketprijzen begrijpt en kan tonen in zoekresultaten.
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: COMPANY_NAME,
+  description:
+    "Verhuur van een fotobooth met directe prints voor bruiloften, bedrijfsfeesten en evenementen in de regio Assendelft/Zaanstreek.",
+  url: SITE_URL,
+  telephone: PHONE_TEL,
+  email: EMAIL,
+  image: `${SITE_URL}/images/sfeer-1.jpg`,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: ADDRESS_STREET,
+    postalCode: ADDRESS_POSTAL_CODE,
+    addressLocality: ADDRESS_LOCALITY,
+    addressCountry: "NL",
+  },
+  areaServed: "Noord-Holland",
+  sameAs: [INSTAGRAM_URL],
+  priceRange: "€250 - €450",
+  makesOffer: pricingPlans.map((plan) => ({
+    "@type": "Offer",
+    name: plan.name,
+    description: plan.desc,
+    price: plan.price.replace("€", ""),
+    priceCurrency: "EUR",
+  })),
+};
 
 const InstagramIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
@@ -28,11 +64,22 @@ export default function Home() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <Navbar />
       <main id="top" className="pt-[80px]">
         {/* HERO */}
-        <section className="min-h-[80vh] flex items-center justify-center px-5 md:px-8 py-24 md:py-32 max-w-[1280px] mx-auto relative overflow-hidden">
-          <div className="absolute inset-0 z-0 bg-[url('/images/sfeer-1.jpg')] bg-cover bg-center" />
+        <section className="min-h-[80svh] flex items-center justify-center px-5 md:px-8 py-24 md:py-32 max-w-[1280px] mx-auto relative overflow-hidden">
+          <Image
+            src="/images/sfeer-1.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="z-0 object-cover"
+          />
           <div className="absolute inset-0 z-0 bg-gradient-to-b from-surface/70 via-surface/65 to-surface" />
           <div className="relative z-10 text-center max-w-4xl mx-auto flex flex-col items-center gap-8">
             <h1 className="text-[40px] sm:text-[48px] md:text-[72px] text-primary leading-[1.1] tracking-[-0.03em] md:tracking-[-0.04em] font-semibold">
@@ -52,11 +99,14 @@ export default function Home() {
               </a>
               <a
                 href="#booking"
-                className="btn-primary px-8 py-3 rounded-full text-xs font-semibold tracking-wider uppercase text-center w-full sm:w-auto"
+                className="btn-accent px-8 py-3 rounded-full text-xs font-semibold tracking-wider uppercase text-center w-full sm:w-auto"
               >
                 Boek nu
               </a>
             </div>
+            <p className="text-sm text-on-surface-variant">
+              Vrijblijvende aanvraag · Reactie binnen 24 uur
+            </p>
           </div>
         </section>
 
@@ -81,7 +131,8 @@ export default function Home() {
                 src={booth.image}
                 alt={booth.alt}
                 label={booth.title}
-                className="absolute inset-0 w-full h-full object-cover"
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover"
               />
             </div>
             <div>
@@ -106,7 +157,7 @@ export default function Home() {
               </ul>
               <a
                 href="#booking"
-                className="btn-primary mt-8 inline-flex px-8 py-3 rounded-full text-xs font-semibold tracking-wider uppercase"
+                className="btn-accent mt-8 inline-flex px-8 py-3 rounded-full text-xs font-semibold tracking-wider uppercase"
               >
                 Boek de fotobooth
               </a>
@@ -119,7 +170,7 @@ export default function Home() {
           id="how-it-works"
           className="py-16 md:py-24 px-5 md:px-8 max-w-[1280px] mx-auto bg-surface-faint rounded-3xl my-16"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-8 md:p-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-8 md:p-16">
             <div className="lg:col-span-4 flex flex-col gap-6">
               <h2 className="text-[28px] md:text-[32px] font-semibold tracking-tight text-primary">
                 Waarom Flashframe?
@@ -310,6 +361,8 @@ export default function Home() {
           </p>
         </div>
       </footer>
+
+      <StickyCta />
     </>
   );
 }

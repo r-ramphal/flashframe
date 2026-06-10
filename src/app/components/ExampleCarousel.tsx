@@ -1,9 +1,49 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Photo from "./Photo";
 import { galleryItems as items } from "../content";
+
+// Laadt de video pas zodra hij (bijna) in beeld komt, zodat mobiele bezoekers
+// niet meteen alle video's hoeven te downloaden.
+function LazyVideo({ src, title }: { src: string; title: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (visible) ref.current?.play().catch(() => {});
+  }, [visible]);
+
+  return (
+    <video
+      ref={ref}
+      src={visible ? src : undefined}
+      aria-label={title}
+      muted
+      loop
+      playsInline
+      preload="none"
+      className="absolute inset-0 w-full h-full object-cover"
+    />
+  );
+}
 
 export default function ExampleCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -78,21 +118,14 @@ export default function ExampleCarousel() {
               >
                 <div className="image-card group relative aspect-[4/5] bg-surface-container overflow-hidden rounded-xl">
                   {item.type === "video" ? (
-                    <video
-                      src={item.src}
-                      aria-label={item.title}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
+                    <LazyVideo src={item.src} title={item.title} />
                   ) : (
                     <Photo
                       src={item.src}
                       alt={item.title}
                       label={item.title}
-                      className="absolute inset-0 w-full h-full object-cover"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 85vw"
+                      className="object-cover"
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
@@ -113,10 +146,14 @@ export default function ExampleCarousel() {
               key={i}
               onClick={() => emblaApi?.scrollTo(i)}
               aria-label={`Ga naar slide ${i + 1}`}
-              className={`h-2 w-2 rounded-full transition-colors ${
-                selected === i ? "bg-primary" : "bg-primary/20"
-              }`}
-            />
+              className="p-2 -m-1 flex items-center justify-center"
+            >
+              <span
+                className={`h-2 w-2 rounded-full transition-colors ${
+                  selected === i ? "bg-primary" : "bg-primary/20"
+                }`}
+              />
+            </button>
           ))}
         </div>
       </div>

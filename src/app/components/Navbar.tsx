@@ -64,12 +64,13 @@ export default function Navbar() {
           <WhatsAppButton variant="icon" />
           <a
             href="#booking"
-            className="btn-primary px-6 py-2 rounded-full text-xs font-semibold tracking-wider uppercase active:scale-90 transition-transform"
+            className="btn-accent px-6 py-2 rounded-full text-xs font-semibold tracking-wider uppercase"
           >
             Boek nu
           </a>
           <button
-            aria-label="Open menu"
+            aria-label={open ? "Sluit menu" : "Open menu"}
+            aria-expanded={open}
             onClick={() => setOpen(!open)}
             className="md:hidden text-primary flex items-center"
           >

@@ -4,6 +4,7 @@ import {
   extraHoursNote,
   travelCostNote,
 } from "../content";
+import PlanCta from "./PlanCta";
 
 export default function Pricing() {
   const single = plans.length === 1;
@@ -54,14 +55,14 @@ export default function Pricing() {
             </div>
 
             <div className="border-y border-border-subtle px-8 py-4">
-              <a
-                href="#booking"
+              <PlanCta
+                plan={`${plan.name} (${plan.price})`}
                 className={`flex items-center justify-center w-full px-6 py-3 rounded-full text-xs font-semibold tracking-wider uppercase ${
-                  plan.highlighted || single ? "btn-primary" : "btn-outline"
+                  plan.highlighted || single ? "btn-accent" : "btn-outline"
                 }`}
               >
                 Aanvragen
-              </a>
+              </PlanCta>
             </div>
 
             <ul role="list" className="space-y-3 p-8">

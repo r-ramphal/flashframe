@@ -1,17 +1,31 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 type Props = {
   src: string;
   alt: string;
   label?: string;
   className?: string;
+  // Geef per gebruik door hoe breed de afbeelding op het scherm staat,
+  // zodat next/image het juiste (kleine) bestand naar mobiel stuurt.
+  sizes?: string;
+  // Alleen true voor de afbeelding die bovenaan de pagina direct zichtbaar is (LCP).
+  priority?: boolean;
 };
 
-// Toont een afbeelding uit /public/images. Zolang het bestand ontbreekt,
+// Toont een afbeelding uit /public/images via next/image (automatisch
+// geschaald en gecomprimeerd per apparaat). Zolang het bestand ontbreekt,
 // verschijnt automatisch een nette placeholder i.p.v. een kapotte afbeelding.
-export default function Photo({ src, alt, label, className }: Props) {
+export default function Photo({
+  src,
+  alt,
+  label,
+  className,
+  sizes = "100vw",
+  priority = false,
+}: Props) {
   const [error, setError] = useState(false);
 
   if (error) {
@@ -28,11 +42,13 @@ export default function Photo({ src, alt, label, className }: Props) {
     );
   }
 
-  // eslint-disable-next-line @next/next/no-img-element
   return (
-    <img
+    <Image
       src={src}
       alt={alt}
+      fill
+      sizes={sizes}
+      priority={priority}
       onError={() => setError(true)}
       className={className}
     />
