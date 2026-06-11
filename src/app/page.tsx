@@ -1,4 +1,7 @@
 import Image from "next/image";
+// Static import zodat Next bij de build een blur-placeholder genereert: de
+// hero toont direct een wazige versie i.p.v. een leeg vlak tot de foto er is.
+import heroImage from "../../public/images/sfeer-1.jpg";
 import Navbar from "./components/Navbar";
 import BookingForm from "./components/BookingForm";
 import Pricing from "./components/Pricing";
@@ -77,12 +80,19 @@ export default function Home() {
           data-hero-section
           className="min-h-[80svh] flex items-center justify-center px-5 md:px-8 py-24 md:py-32 relative overflow-hidden"
         >
-          <div data-hero-image className="absolute inset-0 z-0">
+          {/* De transform is de beginstand van de GSAP-parallax (PageAnimations):
+              door hem al in CSS te zetten "springt" de foto niet zodra GSAP
+              na het idle-moment inhaakt. */}
+          <div
+            data-hero-image
+            className="absolute inset-0 z-0 [transform:translateY(-3%)_scale(1.06)]"
+          >
             <Image
-              src="/images/sfeer-1.jpg"
+              src={heroImage}
               alt=""
               fill
               priority
+              placeholder="blur"
               quality={60}
               sizes="100vw"
               className="object-cover"

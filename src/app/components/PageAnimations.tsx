@@ -39,6 +39,9 @@ export default function PageAnimations({
         mm.add("(prefers-reduced-motion: no-preference)", () => {
           // Parallax: de hero-foto scrolt iets langzamer mee dan de pagina.
           // De lichte scale voorkomt dat de randen van de foto in beeld komen.
+          // Let op: de fromTo-beginstand (yPercent -3, scale 1.06) staat óók
+          // als CSS-transform op [data-hero-image] in page.tsx — houd die twee
+          // gelijk, anders springt de foto zodra GSAP laadt.
           gsap.fromTo(
             "[data-hero-image]",
             { yPercent: -3, scale: 1.06 },
