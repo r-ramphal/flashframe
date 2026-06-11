@@ -1,5 +1,6 @@
 // Server-side route die boekingsaanvragen via Resend als e-mail naar de
-// eigenaar stuurt. De Resend API-key is een SECRET en blijft hier server-side —
+// eigenaar stuurt, plus een bevestigingsmail naar de aanvrager.
+// De Resend API-key is een SECRET en blijft hier server-side —
 // nooit in de client (anders dan de oude Web3Forms-key).
 //
 // Vereiste env-vars (zie .env.example / REQUIREMENTS.md):
@@ -8,7 +9,15 @@
 //   RESEND_FROM       – optioneel, geverifieerd afzenderadres
 //                       (default "Flashframe <onboarding@resend.dev>" voor testen)
 import { Resend } from "resend";
-import { EMAIL } from "../../site";
+import { EMAIL, PHONE_DISPLAY, PHONE_TEL, whatsappUrl } from "../../site";
+
+// Ingevulde waarden komen van de bezoeker; escapen voordat ze in HTML belanden.
+const esc = (s: string) =>
+  s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 
 export async function POST(request: Request) {
   let data: Record<string, string>;
@@ -91,8 +100,8 @@ export async function POST(request: Request) {
             ([k, v]) =>
               `<tr>
                  <td style="padding:8px 12px;border-bottom:1px solid #e5e7eb;color:#6b7280;white-space:nowrap;vertical-align:top">${k}</td>
-                 <td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">${String(
-                   v
+                 <td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">${esc(
+                   String(v)
                  ).replace(/\n/g, "<br>")}</td>
                </tr>`
           )
@@ -117,6 +126,48 @@ export async function POST(request: Request) {
         { status: 502 }
       );
     }
+
+    // Bevestiging naar de aanvrager zelf. Best effort: als deze mail faalt is
+    // de aanvraag bij de eigenaar al binnen, dus geen foutmelding richting
+    // de bezoeker. Reply-to is de boekingsinbox zodat een antwoord op de
+    // bevestiging gewoon bij de eigenaar terechtkomt.
+    const bevestigingText = [
+      `Hoi ${naam},`,
+      "",
+      "Bedankt voor je aanvraag bij Flashframe Photobooth! We hebben je gegevens goed ontvangen en nemen zo snel mogelijk contact met je op om de details door te nemen.",
+      "",
+      `Heb je in de tussentijd vragen? Stuur ons een WhatsApp-bericht via ${whatsappUrl} of bel ${PHONE_DISPLAY}.`,
+      "",
+      "Tot snel!",
+      "Flashframe Photobooth",
+    ].join("\n");
+
+    const bevestigingHtml = `
+      <div style="font-family:Inter,Arial,sans-serif;color:#1a1c1c;max-width:560px;line-height:1.6">
+        <p style="margin:0 0 16px">Hoi ${esc(naam)},</p>
+        <p style="margin:0 0 16px">
+          Bedankt voor je aanvraag bij <strong>Flashframe Photobooth</strong>!
+          We hebben je gegevens goed ontvangen en nemen zo snel mogelijk
+          contact met je op om de details door te nemen.
+        </p>
+        <p style="margin:0 0 16px">
+          Heb je in de tussentijd vragen? Stuur ons een
+          <a href="${whatsappUrl}" style="color:#712edd">WhatsApp-bericht</a>
+          of bel <a href="tel:${PHONE_TEL}" style="color:#712edd">${PHONE_DISPLAY}</a>.
+        </p>
+        <p style="margin:0">Tot snel!<br>Flashframe Photobooth</p>
+      </div>`;
+
+    await resend.emails
+      .send({
+        from,
+        to: email,
+        replyTo: to,
+        subject: "We hebben je aanvraag ontvangen — Flashframe Photobooth",
+        text: bevestigingText,
+        html: bevestigingHtml,
+      })
+      .catch(() => {});
 
     return Response.json({ success: true });
   } catch {
