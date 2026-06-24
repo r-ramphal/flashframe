@@ -9,15 +9,12 @@
 //   RESEND_FROM       – optioneel, geverifieerd afzenderadres
 //                       (default "Flashframe <onboarding@resend.dev>" voor testen)
 import { Resend } from "resend";
-import { EMAIL, PHONE_DISPLAY, PHONE_TEL, whatsappUrl } from "../../site";
-
-// Ingevulde waarden komen van de bezoeker; escapen voordat ze in HTML belanden.
-const esc = (s: string) =>
-  s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+import { EMAIL } from "../../site";
+import {
+  ownerNotificationEmail,
+  customerConfirmationEmail,
+  type BookingData,
+} from "./emails";
 
 export async function POST(request: Request) {
   let data: Record<string, string>;
@@ -80,34 +77,17 @@ export async function POST(request: Request) {
   const to = process.env.BOOKING_TO_EMAIL || EMAIL;
   const from = process.env.RESEND_FROM || "Flashframe <onboarding@resend.dev>";
 
-  const lines = [
-    ["Naam", naam],
-    ["E-mail", email],
-    ["Telefoon", telefoon || "—"],
-    ["Datum evenement", datum],
-    ["Type evenement", evenement || "—"],
-    ["Pakket", pakket || "Geen voorkeur"],
-    ["Opmerkingen", opmerkingen || "—"],
-  ];
-
-  const text = lines.map(([k, v]) => `${k}: ${v}`).join("\n");
-  const html = `
-    <div style="font-family:Inter,Arial,sans-serif;color:#1a1c1c;max-width:560px">
-      <h2 style="margin:0 0 16px">Nieuwe boekingsaanvraag</h2>
-      <table style="border-collapse:collapse;width:100%">
-        ${lines
-          .map(
-            ([k, v]) =>
-              `<tr>
-                 <td style="padding:8px 12px;border-bottom:1px solid #e5e7eb;color:#6b7280;white-space:nowrap;vertical-align:top">${k}</td>
-                 <td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">${esc(
-                   String(v)
-                 ).replace(/\n/g, "<br>")}</td>
-               </tr>`
-          )
-          .join("")}
-      </table>
-    </div>`;
+  const booking: BookingData = {
+    naam,
+    email,
+    telefoon,
+    datum,
+    evenement,
+    pakket,
+    opmerkingen,
+  };
+  const ownerMail = ownerNotificationEmail(booking);
+  const confirmationMail = customerConfirmationEmail(booking);
 
   try {
     const resend = new Resend(apiKey);
@@ -115,9 +95,9 @@ export async function POST(request: Request) {
       from,
       to,
       replyTo: email,
-      subject: `Nieuwe boekingsaanvraag — ${naam}`,
-      text,
-      html,
+      subject: ownerMail.subject,
+      text: ownerMail.text,
+      html: ownerMail.html,
     });
 
     if (error) {
@@ -131,41 +111,14 @@ export async function POST(request: Request) {
     // de aanvraag bij de eigenaar al binnen, dus geen foutmelding richting
     // de bezoeker. Reply-to is de boekingsinbox zodat een antwoord op de
     // bevestiging gewoon bij de eigenaar terechtkomt.
-    const bevestigingText = [
-      `Hoi ${naam},`,
-      "",
-      "Bedankt voor je aanvraag bij Flashframe Photobooth! We hebben je gegevens goed ontvangen en nemen zo snel mogelijk contact met je op om de details door te nemen.",
-      "",
-      `Heb je in de tussentijd vragen? Stuur ons een WhatsApp-bericht via ${whatsappUrl} of bel ${PHONE_DISPLAY}.`,
-      "",
-      "Tot snel!",
-      "Flashframe Photobooth",
-    ].join("\n");
-
-    const bevestigingHtml = `
-      <div style="font-family:Inter,Arial,sans-serif;color:#1a1c1c;max-width:560px;line-height:1.6">
-        <p style="margin:0 0 16px">Hoi ${esc(naam)},</p>
-        <p style="margin:0 0 16px">
-          Bedankt voor je aanvraag bij <strong>Flashframe Photobooth</strong>!
-          We hebben je gegevens goed ontvangen en nemen zo snel mogelijk
-          contact met je op om de details door te nemen.
-        </p>
-        <p style="margin:0 0 16px">
-          Heb je in de tussentijd vragen? Stuur ons een
-          <a href="${whatsappUrl}" style="color:#712edd">WhatsApp-bericht</a>
-          of bel <a href="tel:${PHONE_TEL}" style="color:#712edd">${PHONE_DISPLAY}</a>.
-        </p>
-        <p style="margin:0">Tot snel!<br>Flashframe Photobooth</p>
-      </div>`;
-
     await resend.emails
       .send({
         from,
         to: email,
         replyTo: to,
-        subject: "We hebben je aanvraag ontvangen — Flashframe Photobooth",
-        text: bevestigingText,
-        html: bevestigingHtml,
+        subject: confirmationMail.subject,
+        text: confirmationMail.text,
+        html: confirmationMail.html,
       })
       .catch(() => {});
 

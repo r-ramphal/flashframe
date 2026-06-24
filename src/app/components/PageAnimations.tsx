@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { loadGsap, runWhenIdle } from "../lib/gsap";
 
 // Subtiele animatielaag over de (server-rendered) pagina. Werkt via
 // data-attributen, zodat de secties zelf server components blijven:
@@ -10,10 +11,15 @@ import { useEffect, useRef } from "react";
 // De hero-entrance is bewust púúr CSS (.hero-enter in globals.css): die start
 // direct bij de eerste paint en wacht niet op hydration.
 //
-// GSAP wordt dynamisch geïmporteerd ná een idle-moment, zodat het niet
-// meeweegt in de hydration van de pagina (Total Blocking Time). Cleanup loopt
-// via gsap.context().revert(), conform de officiële gsap-react-richtlijnen.
-// Bij prefers-reduced-motion gebeurt er niets en is alles direct zichtbaar.
+// GSAP komt via de centrale lazy loader (lib/gsap.ts) ná een idle-moment, zodat
+// het niet meeweegt in de hydration (Total Blocking Time). Cleanup loopt via
+// gsap.context().revert(), conform de officiële gsap-react-richtlijnen.
+//
+// CLS-garantie: alle reveal-/parallax-tweens animeren UITSLUITEND transform (y/
+// yPercent/scale) en opacity. Dat zijn compositor-only eigenschappen die de
+// layout nooit verschuiven → 0 Cumulative Layout Shift. Animeer hier dus nooit
+// width/height/top/left/margin e.d. Bij prefers-reduced-motion gebeurt er niets
+// en is alles direct zichtbaar.
 export default function PageAnimations({
   children,
 }: {
@@ -26,12 +32,8 @@ export default function PageAnimations({
     let cancelled = false;
 
     const init = async () => {
-      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
-        import("gsap"),
-        import("gsap/ScrollTrigger"),
-      ]);
+      const { gsap } = await loadGsap();
       if (cancelled || !ref.current) return;
-      gsap.registerPlugin(ScrollTrigger);
 
       ctx = gsap.context(() => {
         const mm = gsap.matchMedia();
@@ -58,18 +60,22 @@ export default function PageAnimations({
             }
           );
 
-          // Secties faden eenmalig in zodra ze in beeld komen.
+          // Secties faden eenmalig in zodra ze in beeld komen. clearProps haalt
+          // de inline transform ná de reveal weg, zodat CSS-hovers/lifts op die
+          // elementen daarna gewoon werken.
           gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
             gsap.from(el, {
               autoAlpha: 0,
               y: 24,
               duration: 0.5,
               ease: "power2.out",
+              clearProps: "transform",
               scrollTrigger: { trigger: el, start: "top 88%", once: true },
             });
           });
 
-          // Kaarten binnen een groep (prijzen, waarom) verschijnen na elkaar.
+          // Kaarten binnen een groep (prijzen, waarom, galerij) verschijnen na
+          // elkaar.
           gsap.utils
             .toArray<HTMLElement>("[data-reveal-group]")
             .forEach((group) => {
@@ -79,6 +85,7 @@ export default function PageAnimations({
                 duration: 0.5,
                 ease: "power2.out",
                 stagger: 0.1,
+                clearProps: "transform",
                 scrollTrigger: { trigger: group, start: "top 88%", once: true },
               });
             });
@@ -87,18 +94,10 @@ export default function PageAnimations({
     };
 
     // Wachten op een idle-moment zodat hydration eerst kan afronden.
-    if ("requestIdleCallback" in window) {
-      const id = window.requestIdleCallback(() => void init());
-      return () => {
-        cancelled = true;
-        window.cancelIdleCallback(id);
-        ctx?.revert();
-      };
-    }
-    const t = setTimeout(() => void init(), 200);
+    const cancelIdle = runWhenIdle(() => void init());
     return () => {
       cancelled = true;
-      clearTimeout(t);
+      cancelIdle();
       ctx?.revert();
     };
   }, []);

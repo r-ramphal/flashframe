@@ -34,9 +34,9 @@ export default function Pricing() {
         {plans.map((plan) => (
           <div
             key={plan.name}
-            className={`relative flex h-full flex-col rounded-2xl bg-surface-bright shadow-sm ${
+            className={`relative flex h-full flex-col rounded-2xl bg-surface-bright shadow-sm transition-transform duration-300 ease-out hover:-translate-y-1.5 ${
               plan.highlighted
-                ? "border-2 border-secondary"
+                ? "border-2 border-secondary md:-translate-y-2 md:hover:-translate-y-3"
                 : "border border-border-subtle"
             }`}
           >

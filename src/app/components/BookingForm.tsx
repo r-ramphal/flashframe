@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { track } from "@vercel/analytics";
 import { whatsappUrl } from "../site";
 import { pricingPlans } from "../content";
 import Icon from "./Icon";
@@ -42,6 +43,9 @@ export default function BookingForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pakket, setPakket] = useState("");
+  // Stap voor de mobiele flow (op sm+ zijn beide stappen altijd zichtbaar).
+  const [step, setStep] = useState<1 | 2>(1);
+  const step1Ref = useRef<HTMLDivElement>(null);
 
   // Datum van vandaag (YYYY-MM-DD) om data in het verleden te blokkeren.
   const today = new Date().toISOString().split("T")[0];
@@ -53,8 +57,37 @@ export default function BookingForm() {
     return () => window.removeEventListener(SELECT_PLAN_EVENT, handler);
   }, []);
 
+  // True als we op een smal scherm (< sm) staan en de stapsgewijze flow geldt.
+  const isMobile = () =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 639px)").matches;
+
+  // Valideer stap 1 (native required/format) en ga door naar stap 2.
+  function goNext() {
+    const container = step1Ref.current;
+    if (container) {
+      const fields = Array.from(
+        container.querySelectorAll<HTMLInputElement>("input, select, textarea")
+      );
+      const firstInvalid = fields.find((f) => !f.checkValidity());
+      if (firstInvalid) {
+        firstInvalid.reportValidity();
+        return;
+      }
+    }
+    setStep(2);
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    // Op mobiel is stap 1 nog niet de verzendstap (en stap-2-velden zijn dan
+    // verborgen → native required-validatie zou op een onzichtbaar veld vallen).
+    if (isMobile() && step === 1) {
+      goNext();
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
@@ -73,6 +106,8 @@ export default function BookingForm() {
 
       if (result.success) {
         setSubmitted(true);
+        // Conversie-event voor Vercel Analytics (geen persoonsgegevens).
+        track("booking_request", { pakket: pakket || "geen voorkeur" });
       } else {
         setError(
           result.error ||
@@ -108,7 +143,7 @@ export default function BookingForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-10 bg-surface-bright p-6 sm:p-8 md:p-12 rounded-2xl border border-border-subtle shadow-sm"
+      className="space-y-8 bg-surface-bright p-6 sm:p-8 md:p-12 rounded-2xl border border-border-subtle shadow-sm"
     >
       {/* Honeypot tegen spam: door bots ingevuld, voor mensen verborgen */}
       <input
@@ -120,8 +155,27 @@ export default function BookingForm() {
         autoComplete="off"
       />
 
+      {/* Voortgang — alleen mobiel (stapsgewijze flow) */}
+      <div className="sm:hidden">
+        <div className="mb-2 flex items-center justify-between text-xs font-semibold tracking-wider uppercase text-text-muted">
+          <span>Stap {step} van 2</span>
+          <span className="text-secondary">
+            {step === 1 ? "Jouw gegevens" : "Het evenement"}
+          </span>
+        </div>
+        <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-faint">
+          <div
+            className="h-full rounded-full bg-secondary transition-all duration-300"
+            style={{ width: step === 1 ? "50%" : "100%" }}
+          />
+        </div>
+      </div>
+
       {/* Stap 1: contactgegevens */}
-      <div className="space-y-5">
+      <div
+        ref={step1Ref}
+        className={`space-y-5 sm:block ${step === 1 ? "block" : "hidden"}`}
+      >
         <div className="flex items-baseline justify-between gap-4">
           <p className={groupTitleClass}>1 · Jouw gegevens</p>
           <p className="text-xs text-text-muted">
@@ -140,6 +194,7 @@ export default function BookingForm() {
               type="text"
               required
               autoComplete="name"
+              enterKeyHint="next"
               placeholder="Jouw volledige naam"
               className={fieldClass}
             />
@@ -155,6 +210,8 @@ export default function BookingForm() {
               type="email"
               required
               autoComplete="email"
+              inputMode="email"
+              enterKeyHint="next"
               placeholder="jouw@email.nl"
               className={fieldClass}
             />
@@ -169,6 +226,7 @@ export default function BookingForm() {
               name="telefoon"
               type="tel"
               autoComplete="tel"
+              inputMode="tel"
               placeholder="+31 6 12345678"
               className={fieldClass}
             />
@@ -177,7 +235,7 @@ export default function BookingForm() {
       </div>
 
       {/* Stap 2: het evenement */}
-      <div className="space-y-5">
+      <div className={`space-y-5 sm:block ${step === 2 ? "block" : "hidden"}`}>
         <p className={groupTitleClass}>2 · Het evenement</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
@@ -258,15 +316,46 @@ export default function BookingForm() {
           </p>
         )}
 
-        <div className="flex flex-col sm:flex-row-reverse sm:items-center gap-4 sm:justify-between">
+        {/* Mobiel: stapsgewijze knoppen */}
+        <div className="sm:hidden space-y-3">
+          {step === 1 ? (
+            <button
+              type="button"
+              onClick={goNext}
+              className="btn-accent w-full px-8 py-4 rounded-full text-xs font-semibold tracking-wider uppercase"
+            >
+              Volgende
+            </button>
+          ) : (
+            <>
+              <button
+                type="submit"
+                disabled={loading}
+                className="btn-accent w-full px-8 py-4 rounded-full text-xs font-semibold tracking-wider uppercase disabled:opacity-50"
+              >
+                {loading ? "Versturen..." : "Aanvraag versturen"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setStep(1)}
+                className="btn-outline w-full px-8 py-3 rounded-full text-xs font-semibold tracking-wider uppercase"
+              >
+                Vorige
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* Desktop: alles in één keer */}
+        <div className="hidden sm:flex flex-row-reverse items-center gap-4 justify-between">
           <button
             type="submit"
             disabled={loading}
-            className="btn-accent w-full sm:w-auto px-12 py-4 rounded-full text-xs font-semibold tracking-wider uppercase disabled:opacity-50"
+            className="btn-accent px-12 py-4 rounded-full text-xs font-semibold tracking-wider uppercase disabled:opacity-50"
           >
             {loading ? "Versturen..." : "Aanvraag versturen"}
           </button>
-          <span className="text-sm text-text-muted text-center sm:text-left">
+          <span className="text-sm text-text-muted">
             Liever direct contact?{" "}
             <a
               href={whatsappUrl}
@@ -278,6 +367,19 @@ export default function BookingForm() {
             </a>
           </span>
         </div>
+
+        <p className="sm:hidden text-center text-sm text-text-muted">
+          Liever direct contact?{" "}
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-secondary font-medium hover:underline"
+          >
+            WhatsApp ons
+          </a>
+        </p>
+
         <p className="text-xs text-text-muted text-center sm:text-left">
           Door te versturen ga je ermee akkoord dat we je gegevens gebruiken om
           je aanvraag te behandelen.

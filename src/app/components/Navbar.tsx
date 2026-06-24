@@ -31,7 +31,7 @@ export default function Navbar() {
       <div className="flex justify-between items-center px-5 md:px-8 py-4 max-w-[1280px] mx-auto">
         <a
           href="#top"
-          className="text-base sm:text-lg font-bold tracking-tight text-primary whitespace-nowrap"
+          className="brand-font text-base sm:text-lg font-bold tracking-tight text-primary whitespace-nowrap"
         >
           Flashframe{" "}
           <span className="font-medium text-on-surface-variant">Photobooth</span>
