@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import BookButton from "../../components/BookButton";
 import BookingForm from "../../components/BookingForm";
@@ -11,7 +12,7 @@ import Footer from "../../components/Footer";
 import StickyCta from "../../components/StickyCta";
 import PageAnimations from "../../components/PageAnimations";
 import Icon from "../../components/Icon";
-import { citySlugs, getCity } from "../../data/cities";
+import { cities, citySlugs, getCity } from "../../data/cities";
 import { booths, pricingPlans } from "../../content";
 import {
   SITE_URL,
@@ -82,34 +83,55 @@ export default async function CityPage({
   if (!city) notFound();
   const booth = booths[0];
 
-  // Stad-specifieke LocalBusiness met areaServed op de plaats.
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: `${COMPANY_NAME} — ${city.naam}`,
-    description: city.metaDescription,
-    url: `${SITE_URL}/fotobooth-huren/${city.slug}`,
-    telephone: PHONE_TEL,
-    email: EMAIL,
-    image: `${SITE_URL}/images/sfeer-1.jpg`,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: ADDRESS_STREET,
-      postalCode: ADDRESS_POSTAL_CODE,
-      addressLocality: ADDRESS_LOCALITY,
-      addressCountry: "NL",
+  // Stad-specifieke LocalBusiness (areaServed op de plaats) + breadcrumb.
+  const structuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      name: `${COMPANY_NAME} — ${city.naam}`,
+      description: city.metaDescription,
+      url: `${SITE_URL}/fotobooth-huren/${city.slug}`,
+      telephone: PHONE_TEL,
+      email: EMAIL,
+      image: `${SITE_URL}/images/sfeer-1.jpg`,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: ADDRESS_STREET,
+        postalCode: ADDRESS_POSTAL_CODE,
+        addressLocality: ADDRESS_LOCALITY,
+        addressCountry: "NL",
+      },
+      areaServed: { "@type": "City", name: city.naam },
+      sameAs: [INSTAGRAM_URL],
+      priceRange: "€250 - €450",
+      makesOffer: pricingPlans.map((plan) => ({
+        "@type": "Offer",
+        name: plan.name,
+        description: plan.desc,
+        price: plan.price.replace("€", ""),
+        priceCurrency: "EUR",
+      })),
     },
-    areaServed: { "@type": "City", name: city.naam },
-    sameAs: [INSTAGRAM_URL],
-    priceRange: "€250 - €450",
-    makesOffer: pricingPlans.map((plan) => ({
-      "@type": "Offer",
-      name: plan.name,
-      description: plan.desc,
-      price: plan.price.replace("€", ""),
-      priceCurrency: "EUR",
-    })),
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Fotobooth huren in Noord-Holland",
+          item: `${SITE_URL}/fotobooth-huren`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: `Fotobooth huren in ${city.naam}`,
+          item: `${SITE_URL}/fotobooth-huren/${city.slug}`,
+        },
+      ],
+    },
+  ];
 
   return (
     <>
@@ -215,6 +237,36 @@ export default async function CityPage({
 
           {/* REVIEWS — rendert pas zodra er echte reviews zijn */}
           <Reviews />
+
+          {/* ANDERE PLAATSEN — interne links naar de regio */}
+          <section className="px-5 md:px-8 max-w-[1280px] mx-auto">
+            <div data-reveal className="rounded-2xl bg-surface-faint p-8 md:p-10">
+              <h2 className="text-lg font-semibold text-primary mb-3">
+                Flashframe ook in de buurt
+              </h2>
+              <ul className="flex flex-wrap gap-x-4 gap-y-2">
+                {cities
+                  .filter((c) => c.slug !== city.slug)
+                  .map((c) => (
+                    <li key={c.slug}>
+                      <Link
+                        href={`/fotobooth-huren/${c.slug}`}
+                        className="text-sm text-on-surface-variant hover:text-secondary transition-colors"
+                      >
+                        {c.naam}
+                      </Link>
+                    </li>
+                  ))}
+              </ul>
+              <Link
+                href="/fotobooth-huren"
+                className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-secondary hover:underline"
+              >
+                Alle plaatsen in Noord-Holland
+                <Icon name="arrow-forward" className="w-4 h-4" />
+              </Link>
+            </div>
+          </section>
 
           {/* BOEKEN */}
           <section

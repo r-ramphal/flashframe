@@ -36,18 +36,13 @@ export const metadata: Metadata = {
     locale: "nl_NL",
     title: TITLE,
     description: DESCRIPTION,
-    images: [
-      {
-        url: "/images/sfeer-1.jpg",
-        alt: "Gasten poseren voor de Flashframe fotobooth tijdens een evenement",
-      },
-    ],
+    // OG-afbeelding komt site-breed uit app/opengraph-image.tsx (gebrand,
+    // 1200×630). Stadspagina's overschrijven dit met een eigen sfeerfoto.
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: ["/images/sfeer-1.jpg"],
   },
 };
 

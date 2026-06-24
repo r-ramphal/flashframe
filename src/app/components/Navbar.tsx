@@ -1,15 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import WhatsAppButton from "./WhatsAppButton";
 import Icon from "./Icon";
 import { INSTAGRAM_URL } from "../site";
 
+// Root-relatieve hashes (/#...) zodat de links vanaf elke pagina werken
+// (op een stad-/hub-pagina springen ze terug naar de homepage-sectie).
 const links = [
-  { label: "De fotobooth", href: "#products" },
-  { label: "Prijzen", href: "#pricing" },
-  { label: "Hoe het werkt", href: "#how-it-works" },
-  { label: "Contact", href: "#booking" },
+  { label: "De fotobooth", href: "/#products" },
+  { label: "Prijzen", href: "/#pricing" },
+  { label: "Hoe het werkt", href: "/#how-it-works" },
+  { label: "Regio", href: "/fotobooth-huren" },
 ];
 
 export default function Navbar() {
@@ -40,13 +43,13 @@ export default function Navbar() {
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
           {links.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               className="text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity duration-300 text-xs font-semibold tracking-wider uppercase"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -92,14 +95,14 @@ export default function Navbar() {
       >
         <div className="flex flex-col px-5 py-2">
           {links.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
               className="py-3 text-base text-on-surface-variant hover:text-primary transition-colors"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
       </div>

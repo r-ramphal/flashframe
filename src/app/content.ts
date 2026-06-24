@@ -202,3 +202,39 @@ export const extraHoursNote =
 // daarna geldt een kilometervergoeding.
 export const travelCostNote =
   "Reiskosten: de eerste 15 km vanaf Assendelft zijn gratis, daarna €0,30 per kilometer.";
+
+// Veelgestelde vragen. Beantwoordt de meest voorkomende twijfels vóór het
+// boeken én voedt de FAQPage-structured-data (zie Faq.tsx + page.tsx).
+// NB: het ruimte/stroom-antwoord is een concept — eigenaar even laten checken.
+export type Faq = { q: string; a: string };
+
+export const faqs: Faq[] = [
+  {
+    q: "Wat zit er allemaal bij de huur inbegrepen?",
+    a: "Bij elk pakket zitten onbeperkte prints, een gepersonaliseerd startscherm, een kist vol props én de volledige op- en afbouw inbegrepen. Je hebt er dus geen omkijken naar.",
+  },
+  {
+    q: "Hoeveel ruimte en stroom heeft de fotobooth nodig?",
+    a: "We hebben ongeveer 2 bij 2 meter nodig en een stopcontact in de buurt. Is de locatie wat krapper? Laat het ons weten, dan denken we met je mee over de beste plek.",
+  },
+  {
+    q: "Hoe ver van tevoren moet ik boeken?",
+    a: "Hoe eerder hoe beter, zeker in het drukke seizoen (mei tot en met september). Maar ook voor een last-minute feest mag je het altijd proberen — vraag je datum aan en je hoort binnen 24 uur of die nog vrij is.",
+  },
+  {
+    q: "Komen jullie ook buiten de Zaanstreek?",
+    a: "Ja, we komen door heel Noord-Holland (en daarbuiten in overleg). De eerste 15 km vanaf Assendelft zijn gratis, daarna rekenen we €0,30 per kilometer.",
+  },
+  {
+    q: "Hoeveel foto's mogen mijn gasten maken?",
+    a: "Onbeperkt! Je gasten printen de hele huurperiode zoveel fotostrips als ze willen, zonder meerkosten.",
+  },
+  {
+    q: "Krijgen we de foto's ook digitaal?",
+    a: "Bij Basic Plus delen je gasten hun foto's direct via een QR-code. Bij het Complete Pakket ontvang je achteraf álle foto's digitaal in hoge resolutie.",
+  },
+  {
+    q: "Kunnen we het startscherm personaliseren?",
+    a: "Zeker. We stemmen het startscherm vooraf af op jouw feest — denk aan namen, datum of een thema dat bij de gelegenheid past.",
+  },
+];

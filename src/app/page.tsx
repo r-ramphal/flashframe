@@ -8,6 +8,7 @@ import BookingForm from "./components/BookingForm";
 import Pricing from "./components/Pricing";
 import ExampleCarousel from "./components/ExampleCarousel";
 import Reviews from "./components/Reviews";
+import Faq from "./components/Faq";
 import Footer from "./components/Footer";
 import StickyCta from "./components/StickyCta";
 import PageAnimations from "./components/PageAnimations";
@@ -22,7 +23,7 @@ import {
   ADDRESS_LOCALITY,
   SITE_URL,
 } from "./site";
-import { booths, steps, whyCards, pricingPlans } from "./content";
+import { booths, steps, whyCards, pricingPlans, faqs } from "./content";
 
 // Structured data (schema.org LocalBusiness) zodat Google het bedrijf,
 // de regio en de pakketprijzen begrijpt en kan tonen in zoekresultaten.
@@ -55,6 +56,17 @@ const structuredData = {
   })),
 };
 
+// FAQPage-structured-data: voedt mogelijke FAQ-rich-results in Google.
+const faqStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
 export default function Home() {
   const booth = booths[0];
 
@@ -63,6 +75,10 @@ export default function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
       />
       <Navbar />
       <PageAnimations>
@@ -227,6 +243,9 @@ export default function Home() {
 
         {/* REVIEWS — rendert pas zodra er echte reviews zijn (data/reviews.ts) */}
         <Reviews />
+
+        {/* VEELGESTELDE VRAGEN */}
+        <Faq />
 
         {/* BOEKEN */}
         <section

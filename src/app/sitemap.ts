@@ -11,6 +11,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 1,
     },
+    {
+      url: `${SITE_URL}/fotobooth-huren`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
     ...cities.map((city) => ({
       url: `${SITE_URL}/fotobooth-huren/${city.slug}`,
       lastModified: now,
